@@ -1,0 +1,21 @@
+{
+  "name": "Monthly Budget",
+  "short_name": "Monthly",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#2d9cdb",
+  "theme_color": "#2d9cdb",
+  "description": "Track your monthly spendings.",
+  "icons": [
+    {
+      "src": "assets/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

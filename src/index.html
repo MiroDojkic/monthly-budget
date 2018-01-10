@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <link rel="manifest" href="manifest.webmanifest"></link>
+  <title>Monthly Budget</title>
+  <meta name="theme-color" content="#2d9cdb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="../assets/favicon.ico">
+</head>
+
+<body>
+  <div id="app">
+    <div style="
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(45deg, #2f80ed, #2d9cdb);
+      color: white;
+      font-size:42px;
+      font-weight: bold;
+      font-family: sans-serif;
+    ">Monthly Budget</div>
+  </div>
+  <script async type="text/javascript" src="app.js"></script>
+  <script>
+    if (!window.location.host.includes('localhost') && 'serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('sw.js')
+        .then(function () {
+          console.log('Service Worker Registered');
+        })
+        .catch(function (e) {
+          console.error(e);
+        });
+    }
+  </script>
+</body>
+
+</html>
