@@ -1,6 +1,7 @@
 import * as React from 'react';
 import fecha from 'fecha';
 import formats from '../../util/datetimes';
+import Slider from '../Slider';
 
 import s from './styles.scss';
 
@@ -8,11 +9,7 @@ const defaultMonth = fecha.format(Date.now(), formats.MONTH_LONG);
 
 const Header = ({ month, total }) => (
   <header className={s.header}>
-    <h1 className={s.title}>{month || defaultMonth}</h1>
-    <div className={s.total}>
-      <div className={s.value}>${total}</div>
-      <div className={s.name}>leftover</div>
-    </div>
+    <Slider />
   </header>
 );
 

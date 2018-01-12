@@ -1,0 +1,16 @@
+.carousel {
+  width: 25%;
+  * {
+    min-height: 0;
+    min-width: 0;
+  }
+}
+
+:global(.slick-slide) {
+  h5 {
+    display: flex;
+    justify-content: center;
+
+    text-transform: uppercase;
+  }
+}
