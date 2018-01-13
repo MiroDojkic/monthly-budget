@@ -1,4 +1,4 @@
-const critical = require('critical');
+const critical = require('critical'); // eslint-disable-line
 
 critical
   .generate({
