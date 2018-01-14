@@ -1,15 +1,23 @@
 import * as React from 'react';
-import fecha from 'fecha';
-import formats from '../../util/datetimes';
+// import fecha from 'fecha';
+// import formats from '../../util/datetimes';
 import Slider from '../Slider';
 
 import s from './styles.scss';
 
-const defaultMonth = fecha.format(Date.now(), formats.MONTH_LONG);
+// const defaultMonth = fecha.format(Date.now(), formats.MONTH_LONG);
+
+const Total = ({ total }) => (
+  <div className={s.total}>
+    <div className={s.value}>${total}</div>
+    <div className={s.name}>leftover</div>
+  </div>
+);
 
 const Header = ({ month, total }) => (
   <header className={s.header}>
-    <Slider />
+    <Slider className={s.slider} />
+    <Total total={total} />
   </header>
 );
 

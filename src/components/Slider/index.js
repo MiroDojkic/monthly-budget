@@ -5,12 +5,6 @@ import 'slick-carousel/slick/slick-theme.css';
 
 import s from './styles.scss';
 
-const Item = item => (
-  <div className={s.item} key={item}>
-    <h5>{item}</h5>
-  </div>
-);
-
 export default class Slider extends React.Component {
   render() {
     const settings = {
@@ -18,15 +12,21 @@ export default class Slider extends React.Component {
       centerMode: true,
       centerPadding: 0,
       slidesToShow: 1,
-      slidesToScroll: 1,
-      initialSlide: 1
+      initialSlide: 1,
+      focusOnSelect: true
     };
     const items = ['January', 'February', 'March'];
 
     return (
-      <Carousel className={s.carousel} {...settings}>
-        {items.map(Item)}
-      </Carousel>
+      <div className={this.props.className}>
+        <Carousel className={s.carousel} {...settings}>
+          {items.map(item => (
+            <div key={item}>
+              <h5>{item}</h5>
+            </div>
+          ))}
+        </Carousel>
+      </div>
     );
   }
 }
