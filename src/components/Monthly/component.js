@@ -1,22 +1,42 @@
 import * as React from 'react';
-// import fecha from 'fecha';
-// import formats from '../../util/datetimes';
-import Slider from '../Slider';
+import fecha from 'fecha';
+import Carousel from '../Carousel';
+import Total from '../Total';
+import formats from '../../util/datetimes';
 
 import s from './styles.scss';
 
-// const defaultMonth = fecha.format(Date.now(), formats.MONTH_LONG);
+const getInitialDates = () => {
+  const current = new Date();
 
-const Total = ({ total }) => (
-  <div className={s.total}>
-    <div className={s.value}>${total}</div>
-    <div className={s.name}>leftover</div>
+  const previousMonth = current.getMonth() - 1;
+  const nextMonth = current.getMonth() + 1;
+
+  const previous = new Date(current);
+  previous.setMonth(previousMonth);
+
+  const next = new Date(current);
+  next.setMonth(nextMonth);
+
+  return [previous, current, next];
+};
+
+const renderMonth = date => (
+  <div key={date}>
+    <h5>{fecha.format(date, formats.MONTH_LONG)}</h5>
   </div>
 );
 
 const Header = ({ month, total }) => (
   <header className={s.header}>
-    <Slider className={s.slider} />
+    <Carousel
+      items={getInitialDates()}
+      renderItem={renderMonth}
+      onChange={whatever => {
+        console.log(whatever.getMonth());
+      }}
+      className={s.carousel}
+    />
     <Total total={total} />
   </header>
 );

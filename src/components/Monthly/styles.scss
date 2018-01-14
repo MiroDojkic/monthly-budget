@@ -13,9 +13,9 @@
   background: linear-gradient(45deg, #2f80ed, #2d9cdb);
 }
 
-.slider {
-  grid-column: 1 / -1;
+.carousel {
   grid-row: 2 / span 1;
+  grid-column: 1 / -1;
 
   display: flex;
   justify-content: center;
@@ -33,35 +33,6 @@
   color: white;
   font-size: 1.5rem;
   font-weight: medium;
-}
-
-.total {
-  grid-row: 4 / 5;
-  grid-column: 2 / 5;
-
-  display: flex;
-  flex-flow: column nowrap;
-
-  justify-content: center;
-  align-items: center;
-
-  border-radius: 1rem;
-
-  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.25);
-  background: white;
-
-  .value {
-    font-size: 2.2rem;
-    font-weight: medium;
-    color: #ec5d73;
-  }
-
-  .name {
-    color: #ec5d73;
-    text-transform: uppercase;
-    opacity: 0.5;
-    font-weight: medium;
-  }
 }
 
 .listing {
