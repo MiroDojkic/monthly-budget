@@ -8,7 +8,7 @@
     "sw": "workbox generate:sw",
     "copy-assets": "cp assets/* dist/assets",
     "build":
-      "parcel build src/index.html --public-url ./ && npm run critical-css && npm run sw && npm run copy-assets",
+      "parcel build src/index.html --public-url ./ && npm run critical-css && npm run copy-assets && npm run sw",
     "start": "parcel src/index.html",
     "publish": "surge ./dist https://monthly-budget.surge.sh",
     "deploy": "npm run build && npm run publish",
