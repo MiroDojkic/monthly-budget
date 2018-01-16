@@ -1,9 +1,33 @@
 import React from 'react';
+import { injectGlobal, css } from 'emotion';
 import Carousel from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-import s from './styles.scss';
+/* eslint-disable */
+injectGlobal`
+:global(.slick-slide) {
+  h5 {
+    display: flex;
+    justify-content: center;
+
+    color: white;
+    font-size: 1.2rem;
+    font-weight: normal;
+    text-transform: uppercase;
+  }
+}
+`;
+// /* eslint-enable */
+
+const carouselCls = css`
+  width: 180px;
+
+  * {
+    min-width: 0;
+    min-height: 0;
+  }
+`;
 
 export default class CarouselComponent extends React.Component {
   onChange = index => {
@@ -32,8 +56,8 @@ export default class CarouselComponent extends React.Component {
     return (
       <div className={this.props.className}>
         <Carousel
+          className={carouselCls}
           afterChange={this.onChange}
-          className={s.carousel}
           {...settings}
         >
           {items.map(renderItem)}
