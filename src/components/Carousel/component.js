@@ -18,7 +18,7 @@ injectGlobal`
   }
 }
 `;
-// /* eslint-enable */
+/* eslint-enable */
 
 const carouselCls = css`
   width: 180px;
