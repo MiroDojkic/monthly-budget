@@ -7,11 +7,20 @@ import StorageProvider from '../Storage';
 
 /* eslint-disable */
 injectGlobal`
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
-  font-family: 'Roboto', sans-serif;
-
+  @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
   * {
     box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  @font-face {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.googleapis.com/css?family=Roboto:400,500,700) format('woff2');
+    unicode-range: U+0100-024f, U+1-1eff,
+      U+20a0-20ab, U+20ad-20cf, U+2c60-2c7f,
+      U+A720-A7FF;
   }
 }
 `;
