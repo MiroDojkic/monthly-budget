@@ -3,7 +3,11 @@ import styled, { css } from 'react-emotion';
 import fecha from 'fecha';
 import Carousel from '../Carousel';
 import Total from '../Total';
-import formats from '../../util/datetimes';
+import formats, {
+  getInitialDates,
+  getPreviousMonth,
+  getNextMonth
+} from '../../util/datetimes';
 
 const Header = styled.header`
   grid-row: 1 / 2;
@@ -56,23 +60,8 @@ const Value = styled.span`
   font-weight: bold;
 `;
 
-const getInitialDates = () => {
-  const current = new Date();
-
-  const previousMonth = current.getMonth() - 1;
-  const nextMonth = current.getMonth() + 1;
-
-  const previous = new Date(current);
-  previous.setMonth(previousMonth);
-
-  const next = new Date(current);
-  next.setMonth(nextMonth);
-
-  return [previous, current, next];
-};
-
-const renderMonth = date => (
-  <div key={date}>
+const renderMonth = (date, idx) => (
+  <div key={`${date}-${idx}`}>
     <h5>{fecha.format(date, formats.MONTH_LONG)}</h5>
   </div>
 );
@@ -97,21 +86,45 @@ const Wrapper = styled.div`
   grid-template: 220px 1fr 50px / 100%;
 `;
 
-const Monthly = ({ month, expenses, incomeTotal, total }) => (
-  <Wrapper>
-    <Header>
-      <Carousel
-        items={getInitialDates()}
-        renderItem={renderMonth}
-        onChange={whatever => {
-          console.log(whatever.getMonth());
-        }}
-        className={carouselCls}
-      />
-      <Total total={total} />
-    </Header>
-    <Transactions incomeTotal={incomeTotal} expenses={expenses} />
-  </Wrapper>
-);
+export default class Monthly extends React.Component {
+  state = {
+    dates: getInitialDates()
+  };
 
-export default Monthly;
+  onFirstRendered = firstMonth => {
+    const previous = getPreviousMonth(firstMonth);
+    this.setState(state => ({
+      dates: [previous, ...state.dates]
+    }));
+  };
+
+  onLastRendered = lastMonth => {
+    const next = getNextMonth(lastMonth);
+    this.setState(state => ({
+      dates: [...state.dates, next]
+    }));
+  };
+
+  render() {
+    const { expenses, incomeTotal, total } = this.props;
+    return (
+      <Wrapper>
+        <Header>
+          <Carousel
+            dynamic
+            onFirstRendered={this.onFirstRendered}
+            onLastRendered={this.onLastRendered}
+            items={this.state.dates}
+            renderItem={renderMonth}
+            onChange={whatever => {
+              console.log(whatever.getMonth());
+            }}
+            className={carouselCls}
+          />
+          <Total total={total} />
+        </Header>
+        <Transactions incomeTotal={incomeTotal} expenses={expenses} />
+      </Wrapper>
+    );
+  }
+}
