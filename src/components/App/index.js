@@ -4,7 +4,8 @@ import { AppContainer } from 'react-hot-loader';
 import Loader from '../Loader';
 import Monthly from '../Monthly';
 import StorageProvider from '../Storage';
-import './font.css';
+
+import('./font.css');
 
 /* eslint-disable no-unused-expressions */
 injectGlobal`
