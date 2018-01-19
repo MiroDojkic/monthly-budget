@@ -1,13 +1,16 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import StorageProvider from './components/Storage';
 import AppComponent from './components/App';
 
-const App = () => (
-  <StorageProvider>
-    <AppComponent />
-  </StorageProvider>
-);
+require('react-hot-loader/patch');
 
-const appNode = document.getElementById('app');
-ReactDOM.render(<App />, appNode);
+const render = () => {
+  ReactDOM.render(<AppComponent />, document.getElementById('app'));
+};
+render();
+
+if (module.hot) {
+  module.hot.accept(() => {
+    render();
+  });
+}

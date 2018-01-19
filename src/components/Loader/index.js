@@ -1,13 +1,20 @@
 import * as React from 'react';
+import styled from 'react-emotion';
 import { ScaleLoader } from 'react-spinners';
 
-import s from './styles.scss';
+const Wrapper = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+`;
 
 const Error = () => <div>Errrrrror!</div>;
 
 const Spinner = ({ show }) =>
   show ? (
-    <div className={s.loader}>
+    <Wrapper>
       <ScaleLoader
         color="#616161"
         height={40}
@@ -15,7 +22,7 @@ const Spinner = ({ show }) =>
         margin="2px"
         radius={2}
       />
-    </div>
+    </Wrapper>
   ) : null;
 
 const Loader = ({ error, timedOut, pastDelay }) => {
