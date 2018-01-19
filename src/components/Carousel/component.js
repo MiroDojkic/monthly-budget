@@ -6,11 +6,11 @@ import last from 'lodash/last';
 import Carousel from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Arrow from './Arrow';
+import ArrowButton from './ArrowButton';
 
 /* eslint-disable */
 injectGlobal`
-:global(.slick-slide) {
+.slick-slide {
   h5 {
     display: flex;
     justify-content: center;
@@ -38,8 +38,8 @@ export default class CarouselComponent extends React.Component {
     const {
       onChange,
       dynamic,
-      onLastRendered,
-      onFirstRendered,
+      onLastItemRendered,
+      onFirstItemRendered,
       items
     } = this.props;
 
@@ -52,24 +52,23 @@ export default class CarouselComponent extends React.Component {
     }
 
     if (dynamic) {
-      if (index === 0 && onFirstRendered) {
+      if (index === 0 && onFirstItemRendered) {
         const carouselEl = get(this, 'carousel.innerSlider');
 
         // There is no interface that allows us to control state of the carousel,
         // therefore we force this in an ugly way by calling setState on ref.
-        // Even though this isn't causing unnecessary renders
-        // it would be nice to fix it when time allows.
+        // Would be nice to fix it when time allows.
         if (carouselEl) {
           carouselEl.setState({ currentSlide: 1 }, () =>
-            onFirstRendered(first(items))
+            onFirstItemRendered(first(items))
           );
         } else {
           throw new Error('Cannot find carousel dom element');
         }
       }
 
-      if (index === items.length - 1 && onLastRendered) {
-        onLastRendered(last(items));
+      if (index === items.length - 1 && onLastItemRendered) {
+        onLastItemRendered(last(items));
       }
     }
   };
@@ -83,16 +82,16 @@ export default class CarouselComponent extends React.Component {
       initialSlide: 1,
       focusOnSelect: true
     };
-    const { items, renderItem } = this.props;
+    const { items, renderItem, className } = this.props;
 
     return (
-      <div className={this.props.className}>
+      <div className={className}>
         <Carousel
           ref={carousel => {
             this.carousel = carousel;
           }}
-          prevArrow={<Arrow type="left" />}
-          nextArrow={<Arrow type="right" />}
+          prevArrow={<ArrowButton type="left" />}
+          nextArrow={<ArrowButton type="right" />}
           className={carouselCls}
           afterChange={this.onChange}
           {...settings}

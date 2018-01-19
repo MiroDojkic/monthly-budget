@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cx, css } from 'emotion';
 
-const buttonCls = css`
+const resetChrome = css`
   padding: 0;
   margin: 0;
 
@@ -19,8 +19,10 @@ const buttonCls = css`
   }
 `;
 
-export default props => (
-  <button {...props} className={cx(buttonCls, props.className)}>
+const Button = props => (
+  <button {...props} className={cx(resetChrome, props.className)}>
     {props.children}
   </button>
 );
+
+export default Button;

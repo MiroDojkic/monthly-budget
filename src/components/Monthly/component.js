@@ -47,8 +47,14 @@ const ListingItem = styled.div`
 `;
 
 const IncomeName = styled.div`
+  font-size: 1.5rem;
   font-weight: bold;
   text-transform: capitalize;
+`;
+
+const IncomeValue = styled.div`
+  font-size: 1.5rem;
+  font-weight: bold;
 `;
 
 const Name = styled.span`
@@ -58,6 +64,7 @@ const Name = styled.span`
 
 const Value = styled.span`
   font-weight: bold;
+  font-size: 1.5rem;
 `;
 
 const renderMonth = (date, idx) => (
@@ -70,7 +77,7 @@ const Transactions = ({ incomeTotal, expenses }) => (
   <Listing>
     <ListingItem>
       <IncomeName>income</IncomeName>
-      <Value>${incomeTotal}</Value>
+      <IncomeValue>${incomeTotal}</IncomeValue>
     </ListingItem>
     {expenses.map(({ name, value }) => (
       <ListingItem key={name}>
@@ -91,14 +98,14 @@ export default class Monthly extends React.Component {
     dates: getInitialDates()
   };
 
-  onFirstRendered = firstMonth => {
+  onFirstMonthRendered = firstMonth => {
     const previous = getPreviousMonth(firstMonth);
     this.setState(state => ({
       dates: [previous, ...state.dates]
     }));
   };
 
-  onLastRendered = lastMonth => {
+  onLastMonthRendered = lastMonth => {
     const next = getNextMonth(lastMonth);
     this.setState(state => ({
       dates: [...state.dates, next]
@@ -112,8 +119,8 @@ export default class Monthly extends React.Component {
         <Header>
           <Carousel
             dynamic
-            onFirstRendered={this.onFirstRendered}
-            onLastRendered={this.onLastRendered}
+            onFirstItemRendered={this.onFirstMonthRendered}
+            onLastItemRendered={this.onLastMonthRendered}
             items={this.state.dates}
             renderItem={renderMonth}
             onChange={whatever => {

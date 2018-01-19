@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { cx, css } from 'emotion';
 import debounce from 'lodash/debounce';
-import Button from '../Button';
-import ArrowLeftIcon from '../Icons/ArrowLeft';
-import ArrowRightIcon from '../Icons/ArrowRight';
-import noop from '../../util/noop';
+import Button from '../../Button';
+import ArrowLeftIcon from '../../Icons/ArrowLeft';
+import ArrowRightIcon from '../../Icons/ArrowRight';
+import noop from '../../../util/noop';
 
-const arrowCls = css`
+const cls = css`
   height: 1.5em;
   font-size: 1em;
   fill: #fff;
 `;
 
-export default class Arrow extends React.Component {
+export default class ArrowButton extends React.Component {
   onClick = noop;
 
   componentWillReceiveProps({ onClick }) {
@@ -36,14 +36,14 @@ export default class Arrow extends React.Component {
             aria-label="Previous"
             style={style}
             onClick={this.onClick}
-            className={cx(arrowCls, className)}
+            className={cx(cls, className)}
           />
         ) : (
           <ArrowRightIcon
             aria-label="Next"
             style={style}
             onClick={this.onClick}
-            className={cx(arrowCls, className)}
+            className={cx(cls, className)}
           />
         )}
       </Button>
