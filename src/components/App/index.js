@@ -5,26 +5,15 @@ import Loader from '../Loader';
 import Monthly from '../Monthly';
 import StorageProvider from '../Storage';
 
-/* eslint-disable */
+/* eslint-disable no-unused-expressions */
 injectGlobal`
-  @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
-  * {
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
-  }
-
-  @font-face {
-    font-family: 'Roboto', sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://fonts.googleapis.com/css?family=Roboto:400,500,700) format('woff2');
-    unicode-range: U+0100-024f, U+1-1eff,
-      U+20a0-20ab, U+20ad-20cf, U+2c60-2c7f,
-      U+A720-A7FF;
-  }
+* {
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
 }
 `;
-// /* eslint-enable */
+/* eslint-enable no-unusued-expressions */
 
 class HomePage extends React.Component {
   render() {

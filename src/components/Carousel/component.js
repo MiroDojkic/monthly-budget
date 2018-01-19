@@ -1,15 +1,12 @@
 import React from 'react';
-import { cx, injectGlobal, css } from 'emotion';
+import { injectGlobal, css } from 'emotion';
 import get from 'lodash/get';
 import first from 'lodash/first';
 import last from 'lodash/last';
-import debounce from 'lodash/debounce';
 import Carousel from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Button from '../Button';
-import ArrowLeftIcon from '../Icons/ArrowLeft';
-import ArrowRightIcon from '../Icons/ArrowRight';
+import Arrow from './Arrow';
 
 /* eslint-disable */
 injectGlobal`
@@ -35,32 +32,6 @@ const carouselCls = css`
     min-height: 0;
   }
 `;
-
-const arrowCls = css`
-  height: 1.5em;
-  font-size: 1em;
-  fill: #fff;
-`;
-
-const ArrowLeft = ({ className, onClick, style }) => (
-  <Button>
-    <ArrowLeftIcon
-      style={style}
-      onClick={debounce(e => onClick(e), 150)}
-      className={cx(arrowCls, className)}
-    />
-  </Button>
-);
-
-const ArrowRight = ({ className, onClick, style }) => (
-  <Button>
-    <ArrowRightIcon
-      style={style}
-      onClick={debounce(e => onClick(e), 150)}
-      className={cx(arrowCls, className)}
-    />
-  </Button>
-);
 
 export default class CarouselComponent extends React.Component {
   onChange = index => {
@@ -120,8 +91,8 @@ export default class CarouselComponent extends React.Component {
           ref={carousel => {
             this.carousel = carousel;
           }}
-          prevArrow={<ArrowLeft />}
-          nextArrow={<ArrowRight />}
+          prevArrow={<Arrow type="left" />}
+          nextArrow={<Arrow type="right" />}
           className={carouselCls}
           afterChange={this.onChange}
           {...settings}
