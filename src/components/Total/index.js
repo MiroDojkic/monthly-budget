@@ -26,7 +26,6 @@ const Value = styled.div`
 const Name = styled.div`
   color: #ec5d73;
   text-transform: uppercase;
-  opacity: 0.5;
   font-weight: medium;
 `;
 

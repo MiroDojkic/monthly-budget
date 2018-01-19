@@ -24,12 +24,14 @@ const Arrow = ({ className, style, onClick, type = 'left' }) => {
     <Button>
       {type === 'left' ? (
         <ArrowLeftIcon
+          aria-label="Previous"
           style={style}
           onClick={onClickHandler}
           className={cx(arrowCls, className)}
         />
       ) : (
         <ArrowRightIcon
+          aria-label="Next"
           style={style}
           onClick={onClickHandler}
           className={cx(arrowCls, className)}
