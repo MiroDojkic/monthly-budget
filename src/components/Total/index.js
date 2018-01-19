@@ -2,8 +2,7 @@ import * as React from 'react';
 import styled from 'react-emotion';
 
 const Wrapper = styled.div`
-  grid-row: 4 / 5;
-  grid-column: 2 / 5;
+  grid-area: total;
 
   display: flex;
   flex-flow: column nowrap;

@@ -10,18 +10,21 @@ import formats, {
 } from '../../util/datetimes';
 
 const Header = styled.header`
-  grid-row: 1 / 2;
-  grid-column: 1 / 2;
+  grid-area: header;
+  padding: 44px 53px 25px 53px;
 
   display: grid;
-  grid-template: 44px 30px 22px 100px 25px / 53px 45px 1fr 45px 53px;
+  grid-template: 30px 22px 100px / 45px 1fr 45px;
+  grid-template-areas:
+    'carousel carousel carousel'
+    '. . . '
+    'total total total';
 
   background: linear-gradient(45deg, #2f80ed, #2d9cdb);
 `;
 
 const carouselCls = css`
-  grid-row: 2 / span 1;
-  grid-column: 1 / -1;
+  grid-area: carousel
 
   display: flex;
   justify-content: center;
@@ -29,8 +32,7 @@ const carouselCls = css`
 `;
 
 const Listing = styled.div`
-  grid-row: 2 / 3;
-  grid-column: 1 / 2;
+  grid-area: listing;
   color: #425460;
 `;
 
@@ -91,6 +93,10 @@ const Transactions = ({ incomeTotal, expenses }) => (
 const Wrapper = styled.div`
   display: grid;
   grid-template: 220px 1fr 50px / 100%;
+  grid-template-areas:
+    'header'
+    'listing'
+    'buttons';
 `;
 
 export default class Monthly extends React.Component {

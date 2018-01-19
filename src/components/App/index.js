@@ -17,18 +17,23 @@ injectGlobal`
 `;
 /* eslint-enable no-unusued-expressions */
 
-class HomePage extends React.Component {
+class App extends React.Component {
   render() {
-    return this.props.loading ? <Loader /> : <Monthly {...{ ...this.props }} />;
+    return (
+      <AppContainer>
+        <StorageProvider>
+          {this.props.loading ? (
+            <div>
+              <Loader />
+              <Monthly {...{ ...this.props }} />
+            </div>
+          ) : (
+            <Monthly {...{ ...this.props }} />
+          )}
+        </StorageProvider>
+      </AppContainer>
+    );
   }
 }
-
-const App = () => (
-  <AppContainer>
-    <StorageProvider>
-      <HomePage />
-    </StorageProvider>
-  </AppContainer>
-);
 
 export default App;

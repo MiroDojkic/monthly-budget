@@ -50,6 +50,7 @@
     "localforage": "^1.5.5",
     "lodash": "^4.17.4",
     "react": "^16.2.0",
+    "react-content-loader": "^2.0.2",
     "react-dom": "^16.2.0",
     "react-emotion": "^8.0.12",
     "react-hot-loader": "^3.1.3",
