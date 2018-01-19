@@ -12,33 +12,41 @@ const arrowCls = css`
   fill: #fff;
 `;
 
-const Arrow = ({ className, style, onClick, type = 'left' }) => {
-  const debounced = debounce(onClick || noop, 150);
+export default class Arrow extends React.Component {
+  onClick = noop;
 
-  const onClickHandler = e => {
-    e.persist();
-    debounced(e);
-  };
+  componentWillReceiveProps({ onClick }) {
+    if (onClick && onClick !== this.props.onClick) {
+      const debouncedHandler = debounce(onClick, 150);
 
-  return (
-    <Button>
-      {type === 'left' ? (
-        <ArrowLeftIcon
-          aria-label="Previous"
-          style={style}
-          onClick={onClickHandler}
-          className={cx(arrowCls, className)}
-        />
-      ) : (
-        <ArrowRightIcon
-          aria-label="Next"
-          style={style}
-          onClick={onClickHandler}
-          className={cx(arrowCls, className)}
-        />
-      )}
-    </Button>
-  );
-};
+      this.onClick = e => {
+        e.persist();
+        debouncedHandler(e);
+      };
+    }
+  }
 
-export default Arrow;
+  render() {
+    const { className, style, type = 'left' } = this.props;
+
+    return (
+      <Button>
+        {type === 'left' ? (
+          <ArrowLeftIcon
+            aria-label="Previous"
+            style={style}
+            onClick={this.onClick}
+            className={cx(arrowCls, className)}
+          />
+        ) : (
+          <ArrowRightIcon
+            aria-label="Next"
+            style={style}
+            onClick={this.onClick}
+            className={cx(arrowCls, className)}
+          />
+        )}
+      </Button>
+    );
+  }
+}
