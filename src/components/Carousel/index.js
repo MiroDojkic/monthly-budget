@@ -1,5 +1,5 @@
 import Loadable from 'react-loadable';
-import Loader from '../../components/Loader';
+import Loader from './Loader';
 
 const AsyncCarousel = Loadable({
   loader: () => import('./component'),
