@@ -2,10 +2,11 @@ import * as React from 'react';
 import styled from 'react-emotion';
 import ItemLoader from './ItemLoader';
 import { emptyIterable } from '../../util/iterables';
+import { textDark } from '../../constants/colors';
 
 const Listing = styled.div`
   grid-area: listing;
-  color: #425460;
+  color: ${textDark};
 `;
 
 const ListingItem = styled.div`

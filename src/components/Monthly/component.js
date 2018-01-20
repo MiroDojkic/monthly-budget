@@ -9,6 +9,7 @@ import formats, {
   getPreviousMonth,
   getNextMonth
 } from '../../util/datetimes';
+import { primaryGradient } from '../../constants/colors';
 
 const Header = styled.header`
   grid-area: header;
@@ -21,7 +22,7 @@ const Header = styled.header`
     '. . . '
     '. total .';
 
-  background: linear-gradient(45deg, #2f80ed, #2d9cdb);
+  background: ${primaryGradient};
 `;
 
 const carouselCls = css`

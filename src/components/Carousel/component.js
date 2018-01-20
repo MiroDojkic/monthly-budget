@@ -7,6 +7,7 @@ import Carousel from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ArrowButton from './ArrowButton';
+import { white } from '../../constants/colors';
 
 /* eslint-disable */
 injectGlobal`
@@ -15,7 +16,7 @@ injectGlobal`
     display: flex;
     justify-content: center;
 
-    color: white;
+    color: ${white};
     font-size: 1.2rem;
     font-weight: normal;
     text-transform: uppercase;

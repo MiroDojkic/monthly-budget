@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'react-emotion';
-import { ScaleLoader } from 'react-spinners';
+import { ClipLoader } from 'react-spinners';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -15,13 +15,7 @@ const Error = () => <div>Errrrrror!</div>;
 const Spinner = ({ show }) =>
   show ? (
     <Wrapper>
-      <ScaleLoader
-        color="#616161"
-        height={40}
-        width={5}
-        margin="2px"
-        radius={2}
-      />
+      <ClipLoader color="#2f80ed" size={55} />
     </Wrapper>
   ) : null;
 

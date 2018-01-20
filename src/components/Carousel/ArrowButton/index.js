@@ -5,11 +5,12 @@ import Button from '../../Button';
 import ArrowLeftIcon from '../../Icons/ArrowLeft';
 import ArrowRightIcon from '../../Icons/ArrowRight';
 import noop from '../../../util/noop';
+import { white } from '../../../constants/colors';
 
 const cls = css`
   height: 1.5em;
   font-size: 1em;
-  fill: #fff;
+  fill: ${white};
 `;
 
 export default class ArrowButton extends React.Component {
