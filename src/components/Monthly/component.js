@@ -4,12 +4,23 @@ import fecha from 'fecha';
 import Carousel from '../Carousel';
 import Total from '../Total';
 import Transactions from '../Transactions';
+import ActionsMenu from '../ActionsMenu';
 import formats, {
   getInitialDates,
   getPreviousMonth,
   getNextMonth
 } from '../../util/datetimes';
 import { primaryGradient } from '../../constants/colors';
+
+const Wrapper = styled.div`
+  display: grid;
+  height: 100vh;
+  grid-template: 220px 1fr 50px / 100%;
+  grid-template-areas:
+    'header'
+    'listing'
+    'buttons';
+`;
 
 const Header = styled.header`
   grid-area: header;
@@ -23,15 +34,6 @@ const Header = styled.header`
     '. total .';
 
   background: ${primaryGradient};
-`;
-
-const Wrapper = styled.div`
-  display: grid;
-  grid-template: 220px 1fr 50px / 100%;
-  grid-template-areas:
-    'header'
-    'listing'
-    'buttons';
 `;
 
 export default class Monthly extends React.Component {
@@ -95,6 +97,11 @@ export default class Monthly extends React.Component {
           expenses={expenses}
           className={css`
             grid-area: listing;
+          `}
+        />
+        <ActionsMenu
+          className={css`
+            grid-area: buttons;
           `}
         />
       </Wrapper>
