@@ -25,20 +25,6 @@ const Header = styled.header`
   background: ${primaryGradient};
 `;
 
-const carouselCls = css`
-  grid-area: carousel
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const renderMonth = (date, idx) => (
-  <div key={`${date}-${idx}`}>
-    <h5>{fecha.format(date, formats.MONTH_LONG)}</h5>
-  </div>
-);
-
 const Wrapper = styled.div`
   display: grid;
   grid-template: 220px 1fr 50px / 100%;
@@ -71,6 +57,14 @@ export default class Monthly extends React.Component {
     }));
   };
 
+  renderMonth = (date, idx) => (
+    <div key={`${date}-${idx}`}>
+      <h5>{fecha.format(date, formats.MONTH_LONG)}</h5>
+    </div>
+  );
+
+  onChange = date => console.log(date.getMonth());
+
   render() {
     const { loading, expenses, incomeTotal, total } = this.props;
     return (
@@ -81,18 +75,27 @@ export default class Monthly extends React.Component {
             onFirstItemRendered={this.onFirstMonthRendered}
             onLastItemRendered={this.onLastMonthRendered}
             items={this.state.dates}
-            renderItem={renderMonth}
-            onChange={whatever => {
-              console.log(whatever.getMonth());
-            }}
-            className={carouselCls}
+            renderItem={this.renderMonth}
+            onChange={this.onChange}
+            className={css`
+              grid-area: carousel;
+            `}
           />
-          <Total total={total} loading={loading} />
+          <Total
+            total={total}
+            loading={loading}
+            className={css`
+              grid-area: total;
+            `}
+          />
         </Header>
         <Transactions
           loading={loading}
           incomeTotal={incomeTotal}
           expenses={expenses}
+          className={css`
+            grid-area: listing;
+          `}
         />
       </Wrapper>
     );

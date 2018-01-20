@@ -1,5 +1,5 @@
 import React from 'react';
-import { injectGlobal, css } from 'emotion';
+import { cx, injectGlobal, css } from 'emotion';
 import get from 'lodash/get';
 import first from 'lodash/first';
 import last from 'lodash/last';
@@ -24,6 +24,14 @@ injectGlobal`
 }
 `;
 /* eslint-enable */
+
+// For some reason, parcel breaks when 'react-emotion'
+// is imported here, therefore we can't use 'styled'
+const wrapperCls = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const carouselCls = css`
   width: 180px;
@@ -86,7 +94,7 @@ export default class CarouselComponent extends React.Component {
     const { items, renderItem, className } = this.props;
 
     return (
-      <div className={className}>
+      <div className={cx(wrapperCls, className)}>
         <Carousel
           ref={carousel => {
             this.carousel = carousel;

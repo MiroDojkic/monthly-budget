@@ -4,8 +4,6 @@ import Loader from './Loader';
 import { accent, white } from '../../constants/colors';
 
 const Wrapper = styled.div`
-  grid-area: total;
-
   display: flex;
   flex-flow: column nowrap;
 
@@ -30,8 +28,8 @@ const Name = styled.div`
   font-weight: normal;
 `;
 
-const Total = ({ total, loading }) => (
-  <Wrapper>
+const Total = ({ total, loading, className }) => (
+  <Wrapper className={className}>
     {loading ? (
       <Loader />
     ) : (

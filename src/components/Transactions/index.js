@@ -5,8 +5,8 @@ import { emptyIterable } from '../../util/iterables';
 import { textDark } from '../../constants/colors';
 
 const Listing = styled.div`
-  grid-area: listing;
   color: ${textDark};
+  overflow: scroll;
 `;
 
 const ListingItem = styled.div`
@@ -61,11 +61,11 @@ const Expenses = ({ expenses }) =>
     </ListingItem>
   ));
 
-const Transactions = ({ loading, incomeTotal, expenses }) =>
+const Transactions = ({ loading, incomeTotal, expenses, className }) =>
   loading ? (
     <Loader />
   ) : (
-    <Listing>
+    <Listing className={className}>
       <ListingItem>
         <IncomeName>income</IncomeName>
         <Value>${incomeTotal}</Value>
