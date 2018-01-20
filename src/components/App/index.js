@@ -22,14 +22,7 @@ class App extends React.Component {
     return (
       <AppContainer>
         <StorageProvider>
-          {this.props.loading ? (
-            <div>
-              <Loader />
-              <Monthly {...{ ...this.props }} />
-            </div>
-          ) : (
-            <Monthly {...{ ...this.props }} />
-          )}
+          <Monthly {...{ ...this.props }} />
         </StorageProvider>
       </AppContainer>
     );
