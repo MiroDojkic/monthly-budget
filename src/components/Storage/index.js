@@ -4,19 +4,14 @@ import api from '../../util/api';
 
 export default class StorageProvider extends React.Component {
   componentWillMount() {
-    if (navigator.onLine) {
-      this.setState({ loading: true });
-      this.sync();
-    } else {
-      this.get('transactions').then(transactions => {
-        if (transactions) {
-          this.setState(state => ({
-            ...state,
-            ...transactions
-          }));
-        }
-      });
-    }
+    this.get('transactions').then(transactions => {
+      if (transactions) {
+        this.setState(state => ({
+          ...state,
+          ...transactions
+        }));
+      }
+    });
   }
 
   state = {
@@ -24,31 +19,42 @@ export default class StorageProvider extends React.Component {
     expenses: [],
     incomeTotal: 0,
     total: 0,
-    loading: false
+    loading: false,
+    error: null
   };
 
   sync = () => {
-    this.get('user')
-      .then(user => {
-        if (!user) {
-          // throw new Error('Cannot sync for non-authenticated user');
-          return api.get('user_transactions', {
-            userid: 1
-          });
-        } else {
-          return api.get('user_transactions', {
-            userid: user.id
-          });
-        }
-      })
-      .then(({ result }) => this.set('transactions', result))
-      .then(values =>
-        this.setState(state => ({
-          ...state,
-          ...values,
-          loading: false
-        }))
+    if (navigator.onLine) {
+      this.setState({ loading: true }, () =>
+        this.get('user')
+          .then(user => {
+            if (!user) {
+              // throw new Error('Cannot sync for non-authenticated user');
+              return api.get('user_transactions', {
+                userid: 1
+              });
+            } else {
+              return api.get('user_transactions', {
+                userid: user.id
+              });
+            }
+          })
+          .then(({ result }) => this.set('transactions', result))
+          .then(values =>
+            this.setState(state => ({
+              ...state,
+              ...values,
+              loading: false
+            }))
+          )
+          .catch(error => {
+            this.setState({
+              loading: false,
+              error: error
+            });
+          })
       );
+    }
   };
 
   set = (key, value) => localForage.setItem(key, value);

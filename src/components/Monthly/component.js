@@ -3,6 +3,7 @@ import styled, { css } from 'react-emotion';
 import fecha from 'fecha';
 import Carousel from '../Carousel';
 import Total from '../Total';
+import Transactions from '../Transactions';
 import formats, {
   getInitialDates,
   getPreviousMonth,
@@ -14,11 +15,11 @@ const Header = styled.header`
   padding: 44px 53px 25px 53px;
 
   display: grid;
-  grid-template: 30px 22px 100px / 45px 1fr 45px;
+  grid-template: 30px 22px 100px / auto 270px auto;
   grid-template-areas:
-    'carousel carousel carousel'
+    '. carousel .'
     '. . . '
-    'total total total';
+    '. total .';
 
   background: linear-gradient(45deg, #2f80ed, #2d9cdb);
 `;
@@ -31,63 +32,10 @@ const carouselCls = css`
   align-items: center;
 `;
 
-const Listing = styled.div`
-  grid-area: listing;
-  color: #425460;
-`;
-
-const ListingItem = styled.div`
-  display: flex;
-  width: 100%;
-  padding: 21px 33px 17px;
-
-  justify-content: space-between;
-  align-items: flex-end;
-
-  border-bottom: 1px solid #e5e5e5;
-  font-size: 1.5rem;
-`;
-
-const IncomeName = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-transform: capitalize;
-`;
-
-const IncomeValue = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-`;
-
-const Name = styled.span`
-  text-transform: capitalize;
-  font-size: 1.125rem;
-`;
-
-const Value = styled.span`
-  font-weight: bold;
-  font-size: 1.5rem;
-`;
-
 const renderMonth = (date, idx) => (
   <div key={`${date}-${idx}`}>
     <h5>{fecha.format(date, formats.MONTH_LONG)}</h5>
   </div>
-);
-
-const Transactions = ({ incomeTotal, expenses }) => (
-  <Listing>
-    <ListingItem>
-      <IncomeName>income</IncomeName>
-      <IncomeValue>${incomeTotal}</IncomeValue>
-    </ListingItem>
-    {expenses.map(({ name, value }) => (
-      <ListingItem key={name}>
-        <Name>{name}</Name>
-        <Value>- ${value}</Value>
-      </ListingItem>
-    ))}
-  </Listing>
 );
 
 const Wrapper = styled.div`
@@ -100,6 +48,10 @@ const Wrapper = styled.div`
 `;
 
 export default class Monthly extends React.Component {
+  componentWillMount() {
+    this.props.syncStorage();
+  }
+
   state = {
     dates: getInitialDates()
   };
@@ -119,7 +71,7 @@ export default class Monthly extends React.Component {
   };
 
   render() {
-    const { expenses, incomeTotal, total } = this.props;
+    const { loading, expenses, incomeTotal, total } = this.props;
     return (
       <Wrapper>
         <Header>
@@ -134,9 +86,13 @@ export default class Monthly extends React.Component {
             }}
             className={carouselCls}
           />
-          <Total total={total} />
+          <Total total={total} loading={loading} />
         </Header>
-        <Transactions incomeTotal={incomeTotal} expenses={expenses} />
+        <Transactions
+          loading={loading}
+          incomeTotal={incomeTotal}
+          expenses={expenses}
+        />
       </Wrapper>
     );
   }

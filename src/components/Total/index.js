@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'react-emotion';
+import Loader from './Loader';
 
 const Wrapper = styled.div`
   grid-area: total;
@@ -28,10 +29,16 @@ const Name = styled.div`
   font-weight: normal;
 `;
 
-const Total = ({ total }) => (
+const Total = ({ total, loading }) => (
   <Wrapper>
-    <Value>${total}</Value>
-    <Name>leftover</Name>
+    {loading ? (
+      <Loader />
+    ) : (
+      <div>
+        <Value>${total}</Value>
+        <Name>leftover</Name>
+      </div>
+    )}
   </Wrapper>
 );
 
