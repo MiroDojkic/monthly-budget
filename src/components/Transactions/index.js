@@ -21,7 +21,7 @@ const ListingItem = styled.div`
 
   svg {
     width: 100%;
-    height: 24px;
+    height: 1vh;
   }
 `;
 

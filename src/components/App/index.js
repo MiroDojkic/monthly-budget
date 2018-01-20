@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { injectGlobal } from 'emotion';
 import { AppContainer } from 'react-hot-loader';
-import Loader from '../Loader';
 import Monthly from '../Monthly';
 import StorageProvider from '../Storage';
 
@@ -22,7 +21,7 @@ class App extends React.Component {
     return (
       <AppContainer>
         <StorageProvider>
-          <Monthly {...{ ...this.props }} />
+          <Monthly />
         </StorageProvider>
       </AppContainer>
     );
