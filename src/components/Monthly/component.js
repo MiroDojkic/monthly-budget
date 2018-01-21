@@ -12,10 +12,10 @@ import formats, {
 } from '../../util/datetimes';
 import { primaryGradient } from '../../constants/colors';
 
-const Wrapper = styled.div`
+const Grid = styled.div`
   display: grid;
   height: 100vh;
-  grid-template: 220px 1fr 50px / 100%;
+  grid-template: 13.75rem 1fr 3.125rem / 100%;
   grid-template-areas:
     'header'
     'listing'
@@ -24,10 +24,10 @@ const Wrapper = styled.div`
 
 const Header = styled.header`
   grid-area: header;
-  padding: 44px 53px 25px 53px;
+  padding: 2.75rem 3.313rem 1.563rem;
 
   display: grid;
-  grid-template: 30px 22px 100px / auto 270px auto;
+  grid-template: 1.875rem auto 6.25rem / auto 16.88rem auto;
   grid-template-areas:
     '. carousel .'
     '. . . '
@@ -70,7 +70,7 @@ export default class Monthly extends React.Component {
   render() {
     const { loading, expenses, incomeTotal, total } = this.props;
     return (
-      <Wrapper>
+      <Grid>
         <Header>
           <Carousel
             dynamic
@@ -104,7 +104,7 @@ export default class Monthly extends React.Component {
             grid-area: buttons;
           `}
         />
-      </Wrapper>
+      </Grid>
     );
   }
 }

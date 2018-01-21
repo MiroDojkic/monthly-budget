@@ -12,20 +12,20 @@ const Menu = styled.div`
   justify-content: space-evenly;
   align-items: center;
 
-  box-shadow: 0px 0px 20px rgba(66, 84, 96, 0.25);
+  box-shadow: 0 0 1.25rem rgba(66, 84, 96, 0.25);
 `;
 
 const ButtonWrapper = styled.div`
   display: inline-block;
-  padding: 4px;
+  padding: 0.25rem;
 
   position: relative;
-  bottom: 14px;
+  bottom: 0.875rem;
 
   border-radius: 50%;
   background: linear-gradient(180deg, white 0%, #e4f6ff 43.09%);
 
-  box-shadow: 0px 0px 8px rgba(66, 84, 96, 0.25);
+  box-shadow: 0 0 0.5rem rgba(66, 84, 96, 0.25);
 `;
 
 const buttonCls = css`
@@ -35,8 +35,8 @@ const buttonCls = css`
 
 const addButtonCls = css`
   display: flex;
-  min-width: 56px;
-  height: 56px;
+  min-width: 3.5rem;
+  height: 3.5rem;
 
   justify-content: center;
   align-items: center;
@@ -44,7 +44,7 @@ const addButtonCls = css`
   color: white;
   background: linear-gradient(323.75deg, #2f80ed 0%, #2d9cdb 88.72%);
 
-  border-radius: 30px;
+  border-radius: 50%;
 `;
 
 export default class ActionsMenu extends React.Component {
