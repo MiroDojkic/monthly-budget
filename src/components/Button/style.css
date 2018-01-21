@@ -1,0 +1,19 @@
+.resetChrome {
+  padding: 0;
+  margin: 0;
+
+  border: none;
+  background: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  font-family: inherit;
+  font-weight: normal;
+  font-size: inherit;
+
+  cursor: pointer;
+}
+
+.resetChrome:focus,
+.resetChrome:active {
+  outline: none;
+}

@@ -1,27 +1,11 @@
 import * as React from 'react';
-import { cx, css } from 'emotion';
 
-const resetChrome = css`
-  padding: 0;
-  margin: 0;
+// Parcel fails to find 'emotion' module for some reason
+import './style.css';
 
-  border: none;
-  background: none;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
-  font-family: inherit;
-  font-weight: normal;
-  font-size: inherit;
-
-  &:focus,
-  &:active {
-    outline: none;
-  }
-`;
-
-const Button = props => (
-  <button {...props} className={cx(resetChrome, props.className)}>
-    {props.children}
+const Button = ({ children, className, ...rest }) => (
+  <button className={`resetChrome ${className || ''}`} {...rest}>
+    {children}
   </button>
 );
 

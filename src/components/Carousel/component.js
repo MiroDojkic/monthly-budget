@@ -34,7 +34,7 @@ const wrapperCls = css`
 `;
 
 const carouselCls = css`
-  width: 180px;
+  width: 11.25rem;
 
   * {
     min-width: 0;

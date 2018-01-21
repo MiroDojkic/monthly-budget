@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'react-emotion';
+import styled, { css } from 'react-emotion';
 import ItemLoader from './ItemLoader';
 import { emptyIterable } from '../../util/iterables';
 import { textDark } from '../../constants/colors';
@@ -12,17 +12,17 @@ const Listing = styled.div`
 const ListingItem = styled.div`
   display: flex;
   width: 100%;
-  padding: 21px 33px 17px;
+  padding: 1.313rem 2.063rem 1.063rem;
 
   justify-content: space-between;
   align-items: flex-end;
 
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 0.0625rem solid #e5e5e5;
   font-size: 1.5rem;
 
   svg {
     width: 100%;
-    height: 1vh;
+    height: 1vh;,
   }
 `;
 
@@ -37,10 +37,14 @@ const Loader = () => (
   </Listing>
 );
 
-const IncomeName = styled.div`
+const listingFontBig = css`
   font-size: 1.5rem;
   font-weight: bold;
+`;
+
+const IncomeName = styled.div`
   text-transform: capitalize;
+  ${listingFontBig};
 `;
 
 const Name = styled.span`
@@ -49,8 +53,7 @@ const Name = styled.span`
 `;
 
 const Value = styled.span`
-  font-weight: bold;
-  font-size: 1.5rem;
+  ${listingFontBig};
 `;
 
 const Expenses = ({ expenses }) =>

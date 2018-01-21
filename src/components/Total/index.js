@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 
   border-radius: 1rem;
 
-  box-shadow: 0px 0px 38px rgba(0, 0, 0, 0.4), 0px 0px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 2.375rem rgba(0, 0, 0, 0.4), 0 0 0.5rem rgba(0, 0, 0, 0.4);
   background: ${white};
 `;
 
