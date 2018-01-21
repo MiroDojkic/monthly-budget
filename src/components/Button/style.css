@@ -10,8 +10,10 @@
   font-weight: normal;
   font-size: inherit;
 
-  &:focus,
-  &:active {
-    outline: none;
-  }
+  cursor: pointer;
+}
+
+.resetChrome:focus,
+.resetChrome:active {
+  outline: none;
 }

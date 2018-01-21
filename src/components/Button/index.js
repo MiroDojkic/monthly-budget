@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 // Parcel fails to find 'emotion' module for some reason
-import s from './style.css';
+import './style.css';
 
 const Button = ({ children, className, ...rest }) => (
-  <button className={`${s.resetChrome} ${className}`} {...rest}>
+  <button className={`resetChrome ${className || ''}`} {...rest}>
     {children}
   </button>
 );
