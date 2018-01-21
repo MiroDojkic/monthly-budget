@@ -1,11 +1,15 @@
 # :surfer: Monthly Budget
 :construction:&ensp;Early stage of development
 
+![Sample image](https://i.imgur.com/43XDPI0.png?2)
+
 PWA for managing budget on a monthly basis.
 
 Created with simplicity in mind, take control of the budget with just a couple of clicks.
 
 Check it out at&ensp;:point_right:&ensp;[https://monthly-budget.surge.sh](https://monthly-budget.surge.sh)
+
+:lipstick:&ensp; Designed by [Bruna Brakus](https://github.com/brbrakus/)
 
 ## :wrench:&ensp;Built with these awesome tools
 ### REST API
