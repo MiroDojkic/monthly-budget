@@ -4,7 +4,6 @@
     "production": {
       "plugins": [
         ["emotion", { "hoist": true }],
-        "react-hot-loader/babel",
         "transform-class-properties",
         "transform-object-rest-spread"
       ]
