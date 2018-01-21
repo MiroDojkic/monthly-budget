@@ -55,11 +55,15 @@ export default class ActionsMenu extends React.Component {
   render() {
     return (
       <Menu>
-        <Button onClick={this.onSync} className={buttonCls}>
+        <Button aria-label="Sync" onClick={this.onSync} className={buttonCls}>
           <RefreshIcon />
         </Button>
         <ButtonWrapper>
-          <Button onClick={this.onAdd} className={addButtonCls}>
+          <Button
+            aria-label="Add new"
+            onClick={this.onAdd}
+            className={addButtonCls}
+          >
             <PlusIcon
               className={css`
                 fill: white;
@@ -67,7 +71,11 @@ export default class ActionsMenu extends React.Component {
             />
           </Button>
         </ButtonWrapper>
-        <Button onClick={this.onSettings} className={buttonCls}>
+        <Button
+          aria-label="Settings"
+          onClick={this.onSettings}
+          className={buttonCls}
+        >
           <SettingsIcon />
         </Button>
       </Menu>
