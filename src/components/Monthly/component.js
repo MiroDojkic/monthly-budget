@@ -15,7 +15,7 @@ import { primaryGradient } from '../../constants/colors';
 const Grid = styled.div`
   display: grid;
   height: 100vh;
-  grid-template: 13.75rem 1fr 3.125rem / 100%;
+  grid-template: 12.5rem 1fr 3.125rem / 100%;
   grid-template-areas:
     'header'
     'listing'
@@ -24,7 +24,7 @@ const Grid = styled.div`
 
 const Header = styled.header`
   grid-area: header;
-  padding: 2.75rem 3.313rem 1.563rem;
+  padding: 1.563rem 3.313rem;
 
   display: grid;
   grid-template: 1.875rem auto 6.25rem / auto 16.88rem auto;

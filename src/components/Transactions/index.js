@@ -12,7 +12,7 @@ const Listing = styled.div`
 const ListingItem = styled.div`
   display: flex;
   width: 100%;
-  padding: 1.313rem 2.063rem 1.063rem;
+  padding: 1.063rem 2.063rem;
 
   justify-content: space-between;
   align-items: flex-end;
@@ -37,14 +37,15 @@ const Loader = () => (
   </Listing>
 );
 
-const listingFontBig = css`
+const IncomeName = styled.div`
+  text-transform: capitalize;
   font-size: 1.5rem;
   font-weight: bold;
 `;
 
-const IncomeName = styled.div`
-  text-transform: capitalize;
-  ${listingFontBig};
+const IncomeValue = styled.div`
+  font-size: 1.5rem;
+  font-weight: bold;
 `;
 
 const Name = styled.span`
@@ -53,7 +54,8 @@ const Name = styled.span`
 `;
 
 const Value = styled.span`
-  ${listingFontBig};
+  font-weight: bold;
+  font-size: 1.125rem;
 `;
 
 const Expenses = ({ expenses }) =>
@@ -71,7 +73,7 @@ const Transactions = ({ loading, incomeTotal, expenses, className }) =>
     <Listing className={className}>
       <ListingItem>
         <IncomeName>income</IncomeName>
-        <Value>${incomeTotal}</Value>
+        <IncomeValue>${incomeTotal}</IncomeValue>
       </ListingItem>
       <Expenses expenses={expenses} />
     </Listing>
