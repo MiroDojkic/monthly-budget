@@ -38,7 +38,7 @@ const Header = styled.header`
 
 export default class Monthly extends React.Component {
   componentWillMount() {
-    this.props.syncStorage();
+    this.props.syncByMonth(new Date());
   }
 
   state = {
@@ -65,7 +65,7 @@ export default class Monthly extends React.Component {
     </div>
   );
 
-  onChange = date => console.log(date.getMonth());
+  onChange = date => this.props.syncByMonth(date);
 
   render() {
     const { loading, expenses, incomeTotal, total } = this.props;

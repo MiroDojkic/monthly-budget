@@ -59,12 +59,14 @@ const Value = styled.span`
 `;
 
 const Expenses = ({ expenses }) =>
-  expenses.map(({ name, value }) => (
-    <ListingItem key={name}>
-      <Name>{name}</Name>
-      <Value>- ${value}</Value>
-    </ListingItem>
-  ));
+  expenses
+    ? expenses.map(({ name, value }) => (
+        <ListingItem key={name}>
+          <Name>{name}</Name>
+          <Value>- ${value}</Value>
+        </ListingItem>
+      ))
+    : null;
 
 const Transactions = ({ loading, incomeTotal, expenses, className }) =>
   loading ? (

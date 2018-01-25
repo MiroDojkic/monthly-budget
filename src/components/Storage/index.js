@@ -23,6 +23,42 @@ export default class StorageProvider extends React.Component {
     error: null
   };
 
+  syncMonth = datefilter => {
+    if (navigator.onLine) {
+      this.setState({ loading: true }, () =>
+        this.get('user')
+          .then(user => {
+            if (!user) {
+              // throw new Error('Cannot sync for non-authenticated user');
+              return api.get('user_transactions_by_date', {
+                userid: 1,
+                datefilter
+              });
+            } else {
+              return api.get('user_transactions_by_date', {
+                userid: user.id,
+                datefilter
+              });
+            }
+          })
+          .then(({ result }) => this.set('transactions', result))
+          .then(values =>
+            this.setState(state => ({
+              ...state,
+              ...values,
+              loading: false
+            }))
+          )
+          .catch(error => {
+            this.setState({
+              loading: false,
+              error: error
+            });
+          })
+      );
+    }
+  };
+
   sync = () => {
     if (navigator.onLine) {
       this.setState({ loading: true }, () =>
@@ -64,6 +100,7 @@ export default class StorageProvider extends React.Component {
   render() {
     const props = {
       syncStorage: this.sync,
+      syncByMonth: this.syncMonth,
       setItem: this.set,
       ...this.state
     };

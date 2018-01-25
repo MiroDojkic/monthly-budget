@@ -8,14 +8,22 @@ export const getPreviousMonth = current => {
   const previousMonth = currentMonth === 0 ? 11 : current.getMonth() - 1;
 
   const previous = new Date(current);
+  if (currentMonth === 0) {
+    previous.setFullYear(current.getFullYear() - 1);
+  }
   previous.setMonth(previousMonth);
 
   return previous;
 };
 
 export const getNextMonth = current => {
-  const nextMonth = current.getMonth() + 1;
+  const currentMonth = current.getMonth();
+  const nextMonth = currentMonth === 11 ? 0 : currentMonth + 1;
+
   const next = new Date(current);
+  if (currentMonth === 11) {
+    next.setFullYear(current.getFullYear() + 1);
+  }
   next.setMonth(nextMonth);
 
   return next;
