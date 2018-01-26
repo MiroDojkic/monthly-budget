@@ -10,6 +10,7 @@ import formats, {
   getPreviousMonth,
   getNextMonth
 } from '../../util/datetimes';
+import getTransactionByDate from '../../util/selectors';
 import { primaryGradient } from '../../constants/colors';
 
 const Grid = styled.div`
@@ -38,11 +39,12 @@ const Header = styled.header`
 
 export default class Monthly extends React.Component {
   componentWillMount() {
-    this.props.syncByMonth(new Date());
+    this.props.loadByDate(new Date());
   }
 
   state = {
-    dates: getInitialDates()
+    dates: getInitialDates(),
+    selectedDate: new Date()
   };
 
   onFirstMonthRendered = firstMonth => {
@@ -63,10 +65,20 @@ export default class Monthly extends React.Component {
     <h5>{fecha.format(date, formats.MONTH_LONG)}</h5>
   );
 
-  onChange = date => this.props.syncByMonth(date);
+  onChange = date => {
+    this.setState({ selectedDate: date });
+    this.props.loadByDate(date);
+  };
 
   render() {
-    const { loading, expenses, incomeTotal, total } = this.props;
+    const { loading, transactions } = this.props;
+    const { selectedDate } = this.state;
+
+    const { total, expenses, incomeTotal } = getTransactionByDate(
+      transactions,
+      selectedDate
+    );
+
     return (
       <Grid>
         <Header>

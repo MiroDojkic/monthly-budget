@@ -1,108 +1,73 @@
 import * as React from 'react';
+import fecha from 'fecha';
 import localForage from 'localforage';
+import omit from 'lodash/omit';
+import get from 'lodash/get';
 import api from '../../util/api';
+import formats from '../../util/datetimes';
+
+const retentionTime = 600000; // 10 minutes in ms
+
+const initialState = {
+  loading: false,
+  error: null
+};
 
 export default class StorageProvider extends React.Component {
   componentWillMount() {
-    this.get('transactions').then(transactions => {
-      if (transactions) {
-        this.setState(state => ({
-          ...state,
-          ...transactions
-        }));
-      }
+    this.getTransactions().then(transactions => {
+      this.setState({
+        ...initialState,
+        ...transactions
+      });
     });
   }
 
-  state = {
-    incomes: [],
-    expenses: [],
-    incomeTotal: 0,
-    total: 0,
-    loading: false,
-    error: null
-  };
+  setTransactions = () => localForage.setItem('transactions', this.state);
+  getTransactions = () => localForage.getItem('transactions');
 
-  syncMonth = datefilter => {
-    if (navigator.onLine) {
-      this.setState({ loading: true }, () =>
-        this.get('user')
-          .then(user => {
-            if (!user) {
-              // throw new Error('Cannot sync for non-authenticated user');
-              return api.get('user_transactions_by_date', {
-                userid: 1,
-                datefilter
-              });
-            } else {
-              return api.get('user_transactions_by_date', {
-                userid: user.id,
-                datefilter
-              });
-            }
-          })
-          .then(({ result }) => this.set('transactions', result))
-          .then(values =>
-            this.setState(state => ({
-              ...state,
-              ...values,
-              loading: false
-            }))
-          )
-          .catch(error => {
-            this.setState({
-              loading: false,
-              error: error
-            });
-          })
-      );
+  loadByDate = datefilter => {
+    const monthKey = fecha.format(datefilter, formats.TRUNC_TO_MONTH);
+    const lastUpdatedAt = get(this.state, `[${monthKey}].updatedAt`);
+    const cacheIsExpired =
+      !lastUpdatedAt || lastUpdatedAt - new Date() > retentionTime;
+
+    if (!navigator.onLine || !cacheIsExpired) {
+      return;
     }
-  };
 
-  sync = () => {
-    if (navigator.onLine) {
-      this.setState({ loading: true }, () =>
-        this.get('user')
-          .then(user => {
-            if (!user) {
-              // throw new Error('Cannot sync for non-authenticated user');
-              return api.get('user_transactions', {
-                userid: 1
-              });
-            } else {
-              return api.get('user_transactions', {
-                userid: user.id
-              });
+    this.setState({ loading: true }, () =>
+      api
+        .get('user_transactions_by_date', {
+          userid: 1,
+          datefilter
+        })
+        .then(({ result }) =>
+          this.setState(state => ({
+            ...state,
+            loading: false,
+            [monthKey]: {
+              ...result,
+              updatedAt: new Date()
             }
-          })
-          .then(({ result }) => this.set('transactions', result))
-          .then(values =>
-            this.setState(state => ({
-              ...state,
-              ...values,
-              loading: false
-            }))
-          )
-          .catch(error => {
-            this.setState({
-              loading: false,
-              error: error
-            });
-          })
-      );
-    }
+          }))
+        )
+        .then(this.setTransactions)
+        .catch(error => {
+          this.setState({
+            loading: false,
+            error: error
+          });
+        })
+    );
   };
-
-  set = (key, value) => localForage.setItem(key, value);
-
-  get = key => localForage.getItem(key);
 
   render() {
     const props = {
-      syncStorage: this.sync,
-      syncByMonth: this.syncMonth,
-      setItem: this.set,
-      ...this.state
+      loadByDate: this.loadByDate,
+      transactions: omit(this.state, ['loading', 'error']),
+      loading: get(this.state, 'loading', false),
+      error: get(this.state, 'error', null)
     };
 
     return React.cloneElement(this.props.children, props);
