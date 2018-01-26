@@ -39,7 +39,7 @@ const Header = styled.header`
 
 export default class Monthly extends React.Component {
   componentWillMount() {
-    this.props.getByDate(new Date());
+    this.props.loadByDate(new Date());
   }
 
   state = {
@@ -67,7 +67,7 @@ export default class Monthly extends React.Component {
 
   onChange = date => {
     this.setState({ selectedDate: date });
-    this.props.getByDate(date);
+    this.props.loadByDate(date);
   };
 
   render() {
