@@ -15,7 +15,7 @@ const initialState = {
 
 export default class StorageProvider extends React.Component {
   componentWillMount() {
-    this.get('transactions').then(transactions => {
+    this.getTransactions().then(transactions => {
       this.setState({
         ...initialState,
         ...transactions
@@ -23,8 +23,8 @@ export default class StorageProvider extends React.Component {
     });
   }
 
-  set = localForage.setItem;
-  get = localForage.getItem;
+  setTransactions = () => localForage.setItem('transactions', this.state);
+  getTransactions = () => localForage.getItem('transactions');
 
   loadByDate = datefilter => {
     const monthKey = fecha.format(datefilter, formats.TRUNC_TO_MONTH);
@@ -52,7 +52,7 @@ export default class StorageProvider extends React.Component {
             }
           }))
         )
-        .then(() => this.set('transactions', this.state))
+        .then(this.setTransactions)
         .catch(error => {
           this.setState({
             loading: false,
