@@ -60,9 +60,7 @@ export default class Monthly extends React.Component {
   };
 
   renderMonth = (date, idx) => (
-    <div key={`${date}-${idx}`}>
-      <h5>{fecha.format(date, formats.MONTH_LONG)}</h5>
-    </div>
+    <h5>{fecha.format(date, formats.MONTH_LONG)}</h5>
   );
 
   onChange = date => this.props.syncByMonth(date);

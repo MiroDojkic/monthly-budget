@@ -42,6 +42,19 @@ const carouselCls = css`
   }
 `;
 
+const draggable = css`
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+
+  &:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+  }
+`;
+
 export default class CarouselComponent extends React.Component {
   onChange = index => {
     const {
@@ -82,6 +95,15 @@ export default class CarouselComponent extends React.Component {
     }
   };
 
+  renderItems = () => {
+    const { items, renderItem } = this.props;
+    return items.map(item => (
+      <div className={draggable} key={`carousel-item-${item}`}>
+        {renderItem(item)}
+      </div>
+    ));
+  };
+
   render() {
     const settings = {
       infinite: false,
@@ -91,10 +113,9 @@ export default class CarouselComponent extends React.Component {
       initialSlide: 1,
       focusOnSelect: true
     };
-    const { items, renderItem, className } = this.props;
 
     return (
-      <div className={cx(wrapperCls, className)}>
+      <div className={cx(wrapperCls, this.props.className)}>
         <Carousel
           ref={carousel => {
             this.carousel = carousel;
@@ -105,7 +126,7 @@ export default class CarouselComponent extends React.Component {
           afterChange={this.onChange}
           {...settings}
         >
-          {items.map(renderItem)}
+          {this.renderItems()}
         </Carousel>
       </div>
     );
