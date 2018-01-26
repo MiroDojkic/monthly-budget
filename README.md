@@ -17,6 +17,7 @@ Check it out at&ensp;:point_right:&ensp;[https://monthly-budget.surge.sh](https:
 * [PostgREST](https://postgrest.com/en/v4.3/)
 ### Client
 * [React](https://reactjs.org/)
+* [Emotion](https://emotion.sh/)
 * [Parcel](https://parceljs.org/)
 
 ## :rocket:&ensp;Run project
