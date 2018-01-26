@@ -73,10 +73,12 @@ const Transactions = ({ loading, incomeTotal, expenses, className }) =>
     <Loader />
   ) : (
     <Listing className={className}>
-      <ListingItem>
-        <IncomeName>income</IncomeName>
-        <IncomeValue>${incomeTotal}</IncomeValue>
-      </ListingItem>
+      {incomeTotal ? (
+        <ListingItem>
+          <IncomeName>income</IncomeName>
+          <IncomeValue>${incomeTotal}</IncomeValue>
+        </ListingItem>
+      ) : null}
       <Expenses expenses={expenses} />
     </Listing>
   );

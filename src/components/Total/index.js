@@ -16,6 +16,13 @@ const Wrapper = styled.div`
   background: ${white};
 `;
 
+const CenteredColumn = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Value = styled.div`
   font-size: 2.2rem;
   font-weight: bold;
@@ -33,10 +40,10 @@ const Total = ({ total, loading, className }) => (
     {loading ? (
       <Loader />
     ) : (
-      <div>
-        <Value>${total}</Value>
+      <CenteredColumn>
+        <Value>${total || 0}</Value>
         <Name>leftover</Name>
-      </div>
+      </CenteredColumn>
     )}
   </Wrapper>
 );
