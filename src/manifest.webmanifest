@@ -1,7 +1,7 @@
 {
   "name": "Monthly Budget",
   "short_name": "Monthly",
-  "start_url": "/",
+  "start_url": "index.html?launcher=true",
   "display": "standalone",
   "background_color": "#2d9cdb",
   "theme_color": "#2d9cdb",
