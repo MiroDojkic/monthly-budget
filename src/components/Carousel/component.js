@@ -111,7 +111,8 @@ export default class CarouselComponent extends React.Component {
       centerPadding: 0,
       slidesToShow: 1,
       initialSlide: 1,
-      focusOnSelect: true
+      focusOnSelect: true,
+      speed: 150
     };
 
     return (
