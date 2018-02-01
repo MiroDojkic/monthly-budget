@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled, { css } from 'react-emotion';
 import Button from '../Button';
+import TransactionForm from '../TransactionForm';
 import RefreshIcon from '../Icons/Refresh';
 import SettingsIcon from '../Icons/Settings';
 import PlusIcon from '../Icons/Plus';
@@ -28,6 +29,11 @@ const ButtonWrapper = styled.div`
   box-shadow: 0 0 0.5rem rgba(66, 84, 96, 0.25);
 `;
 
+const Form = styled(TransactionForm)`
+  position: absolute;
+  bottom: 80px;
+`;
+
 const buttonCls = css`
   width: 100%;
   fill: ${iconDark};
@@ -48,11 +54,21 @@ const addButtonCls = css`
 `;
 
 export default class ActionsMenu extends React.Component {
+  state = {
+    isFormOpen: false
+  };
+
   onSync = () => console.log('Sync');
-  onAdd = () => console.log('Add');
+
+  onAdd = () => {
+    this.setState({ isFormOpen: true });
+  };
+
   onSettings = () => console.log('Settings');
 
   render() {
+    const { isFormOpen } = this.state;
+
     return (
       <Menu>
         <Button aria-label="Sync" onClick={this.onSync} className={buttonCls}>
@@ -78,6 +94,7 @@ export default class ActionsMenu extends React.Component {
         >
           <SettingsIcon />
         </Button>
+        {isFormOpen ? <Form /> : null}
       </Menu>
     );
   }
