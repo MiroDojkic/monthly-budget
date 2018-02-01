@@ -7,6 +7,7 @@ import Button from '../Button';
 import Checkmark from '../Icons/Checkmark';
 import Close from '../Icons/Close';
 import {
+  white,
   primary,
   borderLight,
   iconDark,
@@ -21,17 +22,22 @@ const typeOptions = [
 
 const repeatOptions = [
   { label: 'Once', value: 'once' },
-  { label: 'Weekly', value: 'weekly' },
-  { label: 'Monthly', value: 'monthly' },
-  { label: 'Yearly', value: 'yearly' }
+  // { label: 'Weekly', value: 'weekly' },
+  { label: 'Monthly', value: 'monthly' }
+  // { label: 'Yearly', value: 'yearly' }
 ];
 
 const Form = styled.form`
   height: 40vh;
   width: 95vw;
 
+  background: ${white};
+
   border: 1px solid ${borderLight};
   border-radius: 5px;
+
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25),
+    0px 0px 20px rgba(66, 84, 96, 0.25);
 `;
 
 const Header = styled.div`
@@ -47,17 +53,19 @@ const Body = styled.div`
   height: 205px;
   padding-bottom: 40px;
 
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-content: space-around;
   align-items: center;
 `;
 
 const Cancel = styled(Button)`
   fill: ${iconDark};
+  cursor: pointer;
 `;
 
 const Confirm = styled(Button)`
   fill: ${primary};
+  cursor: pointer;
 `;
 
 const Field = styled.label`
@@ -67,12 +75,14 @@ const Field = styled.label`
 
 const Label = styled.div`
   color: ${textLight};
-  margin: 5px 20px;
+  margin: 5px 15px;
 `;
 
 const Input = styled.input`
   border: 1px solid ${borderLight};
   height: 40px;
+
+  padding: 0 15px;
   color: ${textDark};
   border-radius: 5px;
 `;
