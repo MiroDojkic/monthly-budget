@@ -12,6 +12,15 @@ injectGlobal`
   box-sizing: border-box;
   font-size: 16px;
   font-family: "Roboto", sans-serif;
+
+  input,
+  textarea,
+  button,
+  select,
+  label,
+  a {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+  }
 }
 `;
 /* eslint-enable no-unusued-expressions */
