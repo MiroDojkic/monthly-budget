@@ -154,17 +154,14 @@ export default class TransactionForm extends React.Component {
         </Field>
         <Field className={repeatFieldCls}>
           <Label>Repeat</Label>
-          <Field>
-            <Label>Repeat</Label>
-            <Select
-              onChange={this.onChange('repeat')}
-              labelClassName={repeatFieldCls}
-              activeClassName={activeCls}
-              name="transactionRepeat"
-              selected={repeat}
-              options={repeatOptions}
-            />
-          </Field>
+          <Select
+            onChange={this.onChange('repeat')}
+            labelClassName={repeatFieldCls}
+            activeClassName={activeCls}
+            name="transactionRepeat"
+            selected={repeat}
+            options={repeatOptions}
+          />
         </Field>
       </Form>
     );
