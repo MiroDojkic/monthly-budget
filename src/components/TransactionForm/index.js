@@ -12,7 +12,8 @@ import {
   borderLight,
   iconDark,
   textLight,
-  textDark
+  textDark,
+  loaderLight
 } from '../../constants/colors';
 
 const typeOptions = [
@@ -102,7 +103,12 @@ const repeatFieldCls = css`
 
 const checkedCls = css`
   grid-area: select;
+  color: inherit;
   background: ${borderLight};
+`;
+
+const activeCls = css`
+  background: ${loaderLight};
 `;
 
 export default class TransactionForm extends React.Component {
@@ -148,13 +154,17 @@ export default class TransactionForm extends React.Component {
         </Field>
         <Field className={repeatFieldCls}>
           <Label>Repeat</Label>
-          <Select
-            onChange={this.onChange('repeat')}
-            checkedClassName={checkedCls}
-            name="transactionRepeat"
-            selected={repeat}
-            options={repeatOptions}
-          />
+          <Field>
+            <Label>Repeat</Label>
+            <Select
+              onChange={this.onChange('repeat')}
+              labelClassName={repeatFieldCls}
+              activeClassName={activeCls}
+              name="transactionRepeat"
+              selected={repeat}
+              options={repeatOptions}
+            />
+          </Field>
         </Field>
       </Form>
     );

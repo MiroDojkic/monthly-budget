@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled, { css } from 'react-emotion';
 import noop from '../../util/noop';
-import { textDark, borderLight } from '../../constants/colors';
+import { textDark, borderLight, white } from '../../constants/colors';
 
 const Group = styled.div`
   display: flex;
@@ -18,6 +18,7 @@ const Label = styled.label`
   color: ${textDark};
   font-size: 1rem;
   cursor: pointer;
+  transition: all 0.1s ease-in-out;
 
   &:first-of-type {
     border-left: 1px solid ${borderLight};
@@ -31,18 +32,28 @@ const Label = styled.label`
     border-bottom-right-radius: 5px;
   }
 
-  ${({ checked, checkedClassName }) => css`
-    ${checked
-      ? checkedClassName ||
-        `
-      color: white;
+  ${({ checked, checkedClassName, activeClassName }) => css`
+    ${checked &&
+      `
+        color: white;
+        background: linear-gradient(
+          247.07deg,
+          rgba(47, 128, 237, 0.8) -61.36%,
+          rgba(45, 156, 219, 0.8) 100%
+        );
+      `};
+
+    ${checked && checkedClassName};
+
+    &:active {
       background: linear-gradient(
         247.07deg,
-        rgba(47, 128, 237, 0.8) -61.36%,
-        rgba(45, 156, 219, 0.8) 100%
-      );`
-      : ''};
-    ${checked && checkedClassName};
+        rgba(47, 128, 237, 0.6) -61.36%,
+        rgba(45, 156, 219, 0.6) 100%
+      );
+
+      ${activeClassName};
+    }
   `};
 `;
 
@@ -52,6 +63,8 @@ const Input = styled.input`
   -ms-appearance: none;
   -o-appearance: none;
   appearance: none;
+  opacity: 0;
+  position: absolute;
 
   margin: 0;
   padding: 0;
@@ -64,11 +77,13 @@ const Option = ({
   onChange,
   checked,
   labelClassName,
-  checkedClassName
+  checkedClassName,
+  activeClassName
 }) => (
   <Label
     className={labelClassName}
     checkedClassName={checkedClassName}
+    activeClassName={activeClassName}
     checked={checked}
     htmlFor={`${name}-${value}`}
   >
@@ -98,7 +113,8 @@ export default class Select extends React.Component {
       selected,
       className,
       labelClassName,
-      checkedClassName
+      checkedClassName,
+      activeClassName
     } = this.props;
 
     return (
@@ -113,6 +129,7 @@ export default class Select extends React.Component {
             checked={selected === value}
             labelClassName={labelClassName}
             checkedClassName={checkedClassName}
+            activeClassName={activeClassName}
           />
         ))}
       </Group>

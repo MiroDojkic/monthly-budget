@@ -31,7 +31,7 @@ const Header = styled.header`
   grid-template: 1.875rem auto 6.25rem / auto 16.88rem auto;
   grid-template-areas:
     '. carousel .'
-    '. . . '
+    '. . .'
     '. total .';
 
   background: ${primaryGradient};
