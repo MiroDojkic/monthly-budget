@@ -67,6 +67,7 @@ export default class ActionsMenu extends React.Component {
   onSettings = () => console.log('Settings');
 
   render() {
+    const { selectedDate } = this.props;
     const { isFormOpen } = this.state;
 
     return (
@@ -94,7 +95,7 @@ export default class ActionsMenu extends React.Component {
         >
           <SettingsIcon />
         </Button>
-        {isFormOpen ? <Form /> : null}
+        {isFormOpen ? <Form date={selectedDate} /> : null}
       </Menu>
     );
   }

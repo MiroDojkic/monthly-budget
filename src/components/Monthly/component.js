@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { connect } from 'unistore/react';
 import styled, { css } from 'react-emotion';
 import fecha from 'fecha';
 import Carousel from '../Carousel';
@@ -12,6 +13,8 @@ import formats, {
 } from '../../util/datetimes';
 import getTransactionByDate from '../../util/selectors';
 import { primaryGradient } from '../../constants/colors';
+import actions from '../../actions/transactions';
+import { getTransactions } from '../../selectors/transactions';
 
 const Grid = styled.div`
   display: grid;
@@ -37,6 +40,12 @@ const Header = styled.header`
   background: ${primaryGradient};
 `;
 
+@connect(
+  state => ({
+    transactions: getTransactions(state)
+  }),
+  actions
+)
 export default class Monthly extends React.Component {
   componentWillMount() {
     this.props.loadByDate(new Date());
@@ -110,6 +119,7 @@ export default class Monthly extends React.Component {
           `}
         />
         <ActionsMenu
+          selectedDate={selectedDate}
           className={css`
             grid-area: buttons;
           `}

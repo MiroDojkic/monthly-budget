@@ -5,7 +5,8 @@
       "plugins": [
         ["emotion", { "hoist": true }],
         "transform-class-properties",
-        "transform-object-rest-spread"
+        "transform-object-rest-spread",
+        "transform-decorators-legacy"
       ]
     },
     "development": {
@@ -13,7 +14,8 @@
         ["emotion", { "sourceMap": true, "autoLabel": true }],
         "react-hot-loader/babel",
         "transform-class-properties",
-        "transform-object-rest-spread"
+        "transform-object-rest-spread",
+        "transform-decorators-legacy"
       ]
     }
   }
