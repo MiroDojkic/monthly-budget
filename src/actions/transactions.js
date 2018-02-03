@@ -1,6 +1,7 @@
 import * as React from 'react';
-import fecha from 'fecha';
 import get from 'lodash/get';
+import fecha from 'fecha';
+import { getUpdatedAt } from '../selectors/transactions';
 import api from '../util/api';
 import formats from '../util/datetimes';
 
@@ -9,7 +10,8 @@ const retentionTime = 600000; // 10 minutes in ms
 export default store => ({
   loadByDate: (state, datefilter) => {
     const monthKey = fecha.format(datefilter, formats.TRUNC_TO_MONTH);
-    const lastUpdatedAt = get(state, `[${monthKey}].updatedAt`);
+    const transactions = get(state, 'transactions');
+    const lastUpdatedAt = getUpdatedAt(state)(monthKey);
     const cacheIsExpired =
       !lastUpdatedAt || lastUpdatedAt - new Date() > retentionTime;
 
@@ -17,7 +19,12 @@ export default store => ({
       return;
     }
 
-    store.setState({ loading: true });
+    store.setState({
+      transactions: {
+        ...transactions,
+        loading: true
+      }
+    });
 
     return api
       .get('user_transactions_by_date', {
@@ -25,14 +32,20 @@ export default store => ({
         datefilter
       })
       .then(({ result }) => ({
-        loading: false,
-        [monthKey]: {
-          ...result,
-          updatedAt: new Date()
+        transactions: {
+          ...transactions,
+          loading: false,
+          [monthKey]: {
+            ...result,
+            updatedAt: new Date()
+          }
         }
       }))
       .catch(error => ({
-        loading: false,
+        transactions: {
+          ...transactions,
+          loading: false
+        },
         error: error
       }));
   }

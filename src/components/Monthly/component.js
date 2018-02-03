@@ -11,10 +11,9 @@ import formats, {
   getPreviousMonth,
   getNextMonth
 } from '../../util/datetimes';
-import getTransactionByDate from '../../util/selectors';
 import { primaryGradient } from '../../constants/colors';
 import actions from '../../actions/transactions';
-import { getTransactions } from '../../selectors/transactions';
+import { getTransactionByDate } from '../../selectors/transactions';
 
 const Grid = styled.div`
   display: grid;
@@ -42,7 +41,7 @@ const Header = styled.header`
 
 @connect(
   state => ({
-    transactions: getTransactions(state)
+    getTransactionByDate: getTransactionByDate(state)
   }),
   actions
 )
@@ -80,13 +79,9 @@ export default class Monthly extends React.Component {
   };
 
   render() {
-    const { loading, transactions } = this.props;
+    const { getTransactionByDate } = this.props;
     const { selectedDate } = this.state;
-
-    const { total, expenses, incomeTotal } = getTransactionByDate(
-      transactions,
-      selectedDate
-    );
+    const { total, expenses, incomeTotal } = getTransactionByDate(selectedDate);
 
     return (
       <Grid>
@@ -104,14 +99,12 @@ export default class Monthly extends React.Component {
           />
           <Total
             total={total}
-            loading={loading}
             className={css`
               grid-area: total;
             `}
           />
         </Header>
         <Transactions
-          loading={loading}
           incomeTotal={incomeTotal}
           expenses={expenses}
           className={css`

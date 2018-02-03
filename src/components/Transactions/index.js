@@ -1,6 +1,8 @@
 import * as React from 'react';
-import styled, { css } from 'react-emotion';
+import styled from 'react-emotion';
+import { connect } from 'unistore/react';
 import ItemLoader from './ItemLoader';
+import { getLoading } from '../../selectors/transactions';
 import { emptyIterable } from '../../util/iterables';
 import { textDark } from '../../constants/colors';
 
@@ -68,19 +70,23 @@ const Expenses = ({ expenses }) =>
       ))
     : null;
 
-const Transactions = ({ loading, incomeTotal, expenses, className }) =>
-  loading ? (
-    <Loader />
-  ) : (
-    <Listing className={className}>
-      {incomeTotal ? (
-        <ListingItem>
-          <IncomeName>income</IncomeName>
-          <IncomeValue>${incomeTotal}</IncomeValue>
-        </ListingItem>
-      ) : null}
-      <Expenses expenses={expenses} />
-    </Listing>
-  );
+const Transactions = connect(state => ({
+  loading: getLoading(state)
+}))(
+  ({ loading, incomeTotal, expenses, className }) =>
+    loading ? (
+      <Loader />
+    ) : (
+      <Listing className={className}>
+        {incomeTotal ? (
+          <ListingItem>
+            <IncomeName>income</IncomeName>
+            <IncomeValue>${incomeTotal}</IncomeValue>
+          </ListingItem>
+        ) : null}
+        <Expenses expenses={expenses} />
+      </Listing>
+    )
+);
 
 export default Transactions;

@@ -12,7 +12,9 @@ import Monthly from '../Monthly';
 import('./font.css');
 
 const initialState = {
-  loading: false,
+  transactions: {
+    loading: false
+  },
   error: null
 };
 
