@@ -31,7 +31,7 @@ const ButtonWrapper = styled.div`
 
 const Form = styled(TransactionForm)`
   position: absolute;
-  bottom: 80px;
+  bottom: 5rem;
 `;
 
 const buttonCls = css`

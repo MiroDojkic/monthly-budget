@@ -30,8 +30,9 @@ const repeatOptions = [
 const Form = styled.form`
   display: grid;
   width: 95vw;
+  max-width: 23.75rem;
 
-  grid-template: 83px 16px 64px 27px 66px 32px / 1fr 200px 17px 100px 1fr;
+  grid-template: 5.25rem 0.9375rem 4.313rem 0.9375rem 4.313rem 2.188rem / 1fr 12.5rem 1rem 6.25rem 1fr;
   grid-template-areas:
     'header header header header header'
     '. . . . .'
@@ -52,7 +53,7 @@ const Form = styled.form`
 const Header = styled.div`
   grid-area: header;
   display: flex;
-  height: 83px;
+  height: 5.313rem;
   justify-content: space-evenly;
   border-bottom: 1px solid ${borderLight};
 `;
@@ -73,15 +74,15 @@ const Field = styled.label`
 const Label = styled.div`
   grid-area: name;
   color: ${textLight};
-  margin: 5px 15px;
+  margin: 0.3125rem 0.9375rem;
 `;
 
 const Input = styled.input`
   grid-area: name;
   border: 1px solid ${borderLight};
-  height: 40px;
+  height: 2.5rem;
 
-  padding: 0 15px;
+  padding: 0 0.9375rem;
   color: ${textDark};
   border-radius: 5px;
 `;
