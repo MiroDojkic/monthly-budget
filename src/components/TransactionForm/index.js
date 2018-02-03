@@ -102,7 +102,6 @@ const repeatFieldCls = css`
 `;
 
 const checkedCls = css`
-  grid-area: select;
   color: inherit;
   background: ${borderLight};
 `;
@@ -157,6 +156,7 @@ export default class TransactionForm extends React.Component {
           <Select
             onChange={this.onChange('repeat')}
             labelClassName={repeatFieldCls}
+            checkedClassName={checkedCls}
             activeClassName={activeCls}
             name="transactionRepeat"
             selected={repeat}
