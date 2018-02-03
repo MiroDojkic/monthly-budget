@@ -21,6 +21,7 @@
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-emotion": "^8.0.12",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
@@ -43,7 +44,6 @@
     "create-react-class": "^15.6.2",
     "emotion": "^8.0.12",
     "fecha": "^2.3.2",
-    "localforage": "^1.5.5",
     "lodash": "^4.17.4",
     "react": "^16.2.0",
     "react-content-loader": "^2.0.2",
@@ -54,6 +54,8 @@
     "react-router": "^4.2.0",
     "react-slick": "^0.16.0",
     "react-spinners": "^0.2.5",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "unissist": "^1.1.1",
+    "unistore": "^3.0.4"
   }
 }

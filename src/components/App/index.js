@@ -1,10 +1,30 @@
 import * as React from 'react';
+import createStore from 'unistore';
+import devtools from 'unistore/devtools';
+import { Provider } from 'unistore/react';
+import persistStore from 'unissist';
+import indexedDBAdapter from 'unissist/integrations/indexdbAdapter';
+
 import { injectGlobal } from 'emotion';
 import { AppContainer } from 'react-hot-loader';
 import Monthly from '../Monthly';
-import StorageProvider from '../Storage';
 
 import('./font.css');
+
+const initialState = {
+  transactions: {
+    loading: false
+  },
+  error: null
+};
+
+const store =
+  process.env.NODE_ENV === 'production'
+    ? createStore(initialState)
+    : devtools(createStore(initialState));
+
+const adapter = indexedDBAdapter();
+persistStore(store, adapter);
 
 /* eslint-disable no-unused-expressions */
 injectGlobal`
@@ -29,9 +49,9 @@ class App extends React.Component {
   render() {
     return (
       <AppContainer>
-        <StorageProvider>
+        <Provider store={store}>
           <Monthly />
-        </StorageProvider>
+        </Provider>
       </AppContainer>
     );
   }

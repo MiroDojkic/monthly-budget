@@ -1,6 +1,8 @@
 import * as React from 'react';
 import styled from 'react-emotion';
+import { connect } from 'unistore/react';
 import Loader from './Loader';
+import { getLoading } from '../../selectors/transactions';
 import { accent, white } from '../../constants/colors';
 
 const Wrapper = styled.div`
@@ -35,7 +37,9 @@ const Name = styled.div`
   font-weight: normal;
 `;
 
-const Total = ({ total, loading, className }) => (
+const Total = connect(state => ({
+  loading: getLoading(state)
+}))(({ total, loading, className }) => (
   <Wrapper className={className}>
     {loading ? (
       <Loader />
@@ -46,6 +50,6 @@ const Total = ({ total, loading, className }) => (
       </CenteredColumn>
     )}
   </Wrapper>
-);
+));
 
 export default Total;

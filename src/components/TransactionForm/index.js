@@ -118,7 +118,6 @@ export default class TransactionForm extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
   };
 
   onChange = field => value => {

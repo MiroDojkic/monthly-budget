@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'react-emotion';
+import { connect } from 'unistore/react';
 import { ClipLoader } from 'react-spinners';
 
 const Wrapper = styled.div`
@@ -10,7 +11,7 @@ const Wrapper = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-const Error = () => <div>Errrrrror!</div>;
+const Error = ({ error }) => <div>Errrrrror! {error}</div>;
 
 const Spinner = ({ show }) =>
   show ? (
@@ -19,11 +20,11 @@ const Spinner = ({ show }) =>
     </Wrapper>
   ) : null;
 
-const Loader = ({ error, timedOut, pastDelay }) => {
+const Loader = connect('error')(({ error, timedOut, pastDelay }) => {
   const failed = error || timedOut;
   const show = pastDelay === undefined ? true : pastDelay;
 
-  return failed ? <Error /> : <Spinner show={show} />;
-};
+  return failed ? <Error error={error} /> : <Spinner show={show} />;
+});
 
 export default Loader;
