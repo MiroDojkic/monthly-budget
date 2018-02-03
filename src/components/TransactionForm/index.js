@@ -22,14 +22,23 @@ const typeOptions = [
 
 const repeatOptions = [
   { label: 'Once', value: 'once' },
-  // { label: 'Weekly', value: 'weekly' },
-  { label: 'Monthly', value: 'monthly' }
-  // { label: 'Yearly', value: 'yearly' }
+  { label: 'Weekly', value: 'weekly' },
+  { label: 'Monthly', value: 'monthly' },
+  { label: 'Yearly', value: 'yearly' }
 ];
 
 const Form = styled.form`
-  height: 40vh;
+  display: grid;
   width: 95vw;
+
+  grid-template: 83px 16px 64px 27px 66px 32px / 1fr 200px 17px 100px 1fr;
+  grid-template-areas:
+    'header header header header header'
+    '. . . . .'
+    '. name . value .'
+    '. . . . .'
+    '. select select select .'
+    '. . . . .';
 
   background: ${white};
 
@@ -41,31 +50,19 @@ const Form = styled.form`
 `;
 
 const Header = styled.div`
+  grid-area: header;
   display: flex;
   height: 83px;
   justify-content: space-evenly;
   border-bottom: 1px solid ${borderLight};
 `;
 
-const Body = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  height: 205px;
-  padding-bottom: 40px;
-
-  justify-content: space-around;
-  align-content: space-around;
-  align-items: center;
-`;
-
 const Cancel = styled(Button)`
   fill: ${iconDark};
-  cursor: pointer;
 `;
 
 const Confirm = styled(Button)`
   fill: ${primary};
-  cursor: pointer;
 `;
 
 const Field = styled.label`
@@ -74,11 +71,13 @@ const Field = styled.label`
 `;
 
 const Label = styled.div`
+  grid-area: name;
   color: ${textLight};
   margin: 5px 15px;
 `;
 
 const Input = styled.input`
+  grid-area: name;
   border: 1px solid ${borderLight};
   height: 40px;
 
@@ -88,18 +87,20 @@ const Input = styled.input`
 `;
 
 const nameFieldCls = css`
-  width: 200px;
+  grid-area: name;
 `;
 
 const valueFieldCls = css`
-  width: 100px;
+  grid-area: value;
 `;
 
 const repeatFieldCls = css`
-  padding: 10px 12px 8px;
+  grid-area: select;
+  width: 100%;
 `;
 
 const checkedCls = css`
+  grid-area: select;
   background: ${borderLight};
 `;
 
@@ -138,25 +139,22 @@ export default class TransactionForm extends React.Component {
             <Checkmark />
           </Confirm>
         </Header>
-        <Body>
-          <Field className={nameFieldCls} htmlFor="transaction-name">
-            <Label>Name</Label> <Input id="transcation-name" type="text" />
-          </Field>
-          <Field className={valueFieldCls} htmlFor="transaction-value">
-            <Label>Value</Label> <Input id="transcation-value" type="number" />
-          </Field>
-          <Field>
-            <Label>Repeat</Label>
-            <Select
-              onChange={this.onChange('repeat')}
-              labelClassName={repeatFieldCls}
-              checkedClassName={checkedCls}
-              name="transactionRepeat"
-              selected={repeat}
-              options={repeatOptions}
-            />
-          </Field>
-        </Body>
+        <Field className={nameFieldCls} htmlFor="transaction-name">
+          <Label>Name</Label> <Input id="transcation-name" type="text" />
+        </Field>
+        <Field className={valueFieldCls} htmlFor="transaction-value">
+          <Label>Value</Label> <Input id="transcation-value" type="number" />
+        </Field>
+        <Field className={repeatFieldCls}>
+          <Label>Repeat</Label>
+          <Select
+            onChange={this.onChange('repeat')}
+            checkedClassName={checkedCls}
+            name="transactionRepeat"
+            selected={repeat}
+            options={repeatOptions}
+          />
+        </Field>
       </Form>
     );
   }

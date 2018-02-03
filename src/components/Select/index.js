@@ -10,7 +10,7 @@ const Group = styled.div`
 `;
 
 const Label = styled.label`
-  padding: 0.5625rem 1.188rem;
+  padding: 0.5625rem 0.775rem;
 
   border-top: 1px solid ${borderLight};
   border-bottom: 1px solid ${borderLight};
