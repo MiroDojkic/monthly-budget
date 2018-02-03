@@ -7,6 +7,7 @@ import Button from '../Button';
 import Checkmark from '../Icons/Checkmark';
 import Close from '../Icons/Close';
 import {
+  white,
   primary,
   borderLight,
   iconDark,
@@ -28,29 +29,34 @@ const repeatOptions = [
 ];
 
 const Form = styled.form`
-  height: 40vh;
+  display: grid;
   width: 95vw;
+  max-width: 23.75rem;
+
+  grid-template: 5.25rem 0.9375rem 4.313rem 0.9375rem 4.313rem 2.188rem / 1fr 12.5rem 1rem 6.25rem 1fr;
+  grid-template-areas:
+    'header header header header header'
+    '. . . . .'
+    '. name . value .'
+    '. . . . .'
+    '. select select select .'
+    '. . . . .';
+
+  background: ${white};
 
   border: 1px solid ${borderLight};
   border-radius: 5px;
+
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25),
+    0px 0px 20px rgba(66, 84, 96, 0.25);
 `;
 
 const Header = styled.div`
+  grid-area: header;
   display: flex;
-  height: 83px;
+  height: 5.313rem;
   justify-content: space-evenly;
   border-bottom: 1px solid ${borderLight};
-`;
-
-const Body = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  height: 205px;
-  padding-bottom: 40px;
-
-  justify-content: space-evenly;
-  align-content: space-around;
-  align-items: center;
 `;
 
 const Cancel = styled(Button)`
@@ -67,30 +73,36 @@ const Field = styled.label`
 `;
 
 const Label = styled.div`
+  grid-area: name;
   color: ${textLight};
-  margin: 5px 20px;
+  margin: 0.3125rem 0.9375rem;
 `;
 
 const Input = styled.input`
+  grid-area: name;
   border: 1px solid ${borderLight};
-  height: 40px;
+  height: 2.5rem;
+
+  padding: 0 0.9375rem;
   color: ${textDark};
   border-radius: 5px;
 `;
 
 const nameFieldCls = css`
-  width: 200px;
+  grid-area: name;
 `;
 
 const valueFieldCls = css`
-  width: 100px;
+  grid-area: value;
 `;
 
 const repeatFieldCls = css`
-  padding: 10px 12px 8px;
+  grid-area: select;
+  width: 100%;
 `;
 
 const checkedCls = css`
+  grid-area: select;
   color: inherit;
   background: ${borderLight};
 `;
@@ -134,26 +146,26 @@ export default class TransactionForm extends React.Component {
             <Checkmark />
           </Confirm>
         </Header>
-        <Body>
-          <Field className={nameFieldCls} htmlFor="transaction-name">
-            <Label>Name</Label> <Input id="transcation-name" type="text" />
-          </Field>
-          <Field className={valueFieldCls} htmlFor="transaction-value">
-            <Label>Value</Label> <Input id="transcation-value" type="number" />
-          </Field>
+        <Field className={nameFieldCls} htmlFor="transaction-name">
+          <Label>Name</Label> <Input id="transcation-name" type="text" />
+        </Field>
+        <Field className={valueFieldCls} htmlFor="transaction-value">
+          <Label>Value</Label> <Input id="transcation-value" type="number" />
+        </Field>
+        <Field className={repeatFieldCls}>
+          <Label>Repeat</Label>
           <Field>
             <Label>Repeat</Label>
             <Select
               onChange={this.onChange('repeat')}
               labelClassName={repeatFieldCls}
-              checkedClassName={checkedCls}
               activeClassName={activeCls}
               name="transactionRepeat"
               selected={repeat}
               options={repeatOptions}
             />
           </Field>
-        </Body>
+        </Field>
       </Form>
     );
   }
