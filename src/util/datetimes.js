@@ -44,4 +44,7 @@ export const getInitialDates = () => {
   return [previous, current, next];
 };
 
+export const truncateDateToMonth = date =>
+  fecha.format(date, formats.TRUNC_TO_MONTH);
+
 export default formats;

@@ -13,7 +13,8 @@ module.exports = {
     'react/jsx-filename-extension': 'off',
     'react/sort-comp': 'off',
     'react/no-unused-state': 'off',
-    'react/prefer-stateless-function': 'off'
+    'react/prefer-stateless-function': 'off',
+    'import/prefer-default-export': 'off'
   },
   env: {
     browser: true

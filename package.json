@@ -6,10 +6,12 @@
   "scripts": {
     "sw": "workbox generate:sw",
     "copy-assets": "cp assets/* dist/assets",
-    "build": "parcel build src/index.html --public-url ./ && npm run copy-assets && npm run sw",
+    "build":
+      "parcel build src/index.html --public-url ./ && npm run copy-assets && npm run sw",
     "hotel": "parcel src/index.html -p $PORT",
     "start": "parcel src/index.html",
-    "publish": "surge ./dist https://monthly-budget.surge.sh",
+    "publish":
+      "surge ./dist https://monthly-budget.surge.sh",
     "deploy": "npm run build && npm run publish",
     "lint": "eslint src"
   },
@@ -45,6 +47,7 @@
     "emotion": "^8.0.12",
     "fecha": "^2.3.2",
     "lodash": "^4.17.4",
+    "partial.lenses": "^13.2.1",
     "react": "^16.2.0",
     "react-content-loader": "^2.0.2",
     "react-dom": "^16.2.0",

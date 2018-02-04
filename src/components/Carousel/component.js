@@ -1,8 +1,6 @@
 import React from 'react';
 import { cx, injectGlobal, css } from 'emotion';
-import get from 'lodash/get';
-import first from 'lodash/first';
-import last from 'lodash/last';
+import * as L from 'partial.lenses';
 import Carousel from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -75,14 +73,14 @@ export default class CarouselComponent extends React.Component {
 
     if (dynamic) {
       if (index === 0 && onFirstItemRendered) {
-        const carouselEl = get(this, 'carousel.innerSlider');
+        const carouselEl = L.get(['carousel', 'innerSlider'], this);
 
         // There is no interface that allows us to control state of the carousel,
         // therefore we force this in an ugly way by calling setState on ref.
         // Would be nice to fix it when time allows.
         if (carouselEl) {
           carouselEl.setState({ currentSlide: 1 }, () =>
-            onFirstItemRendered(first(items))
+            onFirstItemRendered(L.get(L.first, items))
           );
         } else {
           throw new Error('Cannot find carousel dom element');
@@ -90,7 +88,7 @@ export default class CarouselComponent extends React.Component {
       }
 
       if (index === items.length - 1 && onLastItemRendered) {
-        onLastItemRendered(last(items));
+        onLastItemRendered(L.get(L.last, items));
       }
     }
   };

@@ -10,7 +10,6 @@ import { AppContainer } from 'react-hot-loader';
 import Monthly from '../Monthly';
 
 import('./font.css');
-
 const initialState = {
   transactions: {
     loading: false

@@ -1,17 +1,33 @@
 import * as React from 'react';
-import get from 'lodash/get';
-import fecha from 'fecha';
-import { getUpdatedAt } from '../selectors/transactions';
+import * as L from 'partial.lenses';
+import { getMonthKey } from '../util/optics';
 import api from '../util/api';
-import formats from '../util/datetimes';
 
 const retentionTime = 600000; // 10 minutes in ms
+const defaultTransaction = {
+  total: 0,
+  incomeTotal: 0,
+  expenses: []
+};
+
+export const State = {
+  updatedAt: date => ['transactions', getMonthKey(date), 'updatedAt'],
+
+  loading: ['transactions', 'loading', L.valueOr(false)],
+
+  error: 'error',
+
+  transactionsByDate: date => [
+    'transactions',
+    getMonthKey(date),
+    L.valueOr(defaultTransaction)
+  ]
+};
 
 export default store => ({
-  loadByDate: (state, datefilter) => {
-    const monthKey = fecha.format(datefilter, formats.TRUNC_TO_MONTH);
-    const transactions = get(state, 'transactions');
-    const lastUpdatedAt = getUpdatedAt(state)(monthKey);
+  loadByDate: (state, transactionsDate) => {
+    const lastUpdatedAt = L.get(State.updatedAt(transactionsDate), state);
+
     const cacheIsExpired =
       !lastUpdatedAt || lastUpdatedAt - new Date() > retentionTime;
 
@@ -19,34 +35,20 @@ export default store => ({
       return;
     }
 
-    store.setState({
-      transactions: {
-        ...transactions,
-        loading: true
-      }
-    });
+    store.setState(L.set(State.loading, true, state));
 
     return api
       .get('user_transactions_by_date', {
         userid: 1,
-        datefilter
+        datefilter: transactionsDate
       })
-      .then(({ result }) => ({
-        transactions: {
-          ...transactions,
-          loading: false,
-          [monthKey]: {
-            ...result,
-            updatedAt: new Date()
-          }
-        }
-      }))
-      .catch(error => ({
-        transactions: {
-          ...transactions,
-          loading: false
-        },
-        error: error
-      }));
+      .then(({ result }) =>
+        L.set(
+          State.transactionsByDate(transactionsDate),
+          L.set('updatedAt', new Date(), result),
+          state
+        )
+      )
+      .catch(error => L.set(State.error, error), state);
   }
 });
