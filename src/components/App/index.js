@@ -13,7 +13,8 @@ import('./font.css');
 
 const initialState = {
   transactions: {
-    loading: false
+    loading: false,
+    updatedAt: null
   },
   error: null
 };

@@ -6,11 +6,19 @@ import formats from '../util/datetimes';
 const defaultTransaction = { total: 0, incomeTotal: 0, expenses: [] };
 const getMonthKey = date => fecha.format(date, formats.TRUNC_TO_MONTH);
 
-export const getTransactionByDate = state => date =>
-  get(state, `transactions.${date && getMonthKey(date)}`, defaultTransaction);
+export const getTransactionByDate = state => date => {
+  const transactions = get(state, `transactions.transactions`, []);
 
-export const getUpdatedAt = state => monthKey =>
-  get(state, `transactions.[${monthKey}].updatedAt`);
+  const isInMonth = t => getMonthKey(t.createdAt) === getMonthKey(date);
+
+  const isRepeatedOverMonth = t =>
+    t.repeat === 'monthly' && t.created_at <= date && t.repeat_until >= date;
+
+  return (
+    transactions &&
+    transactions.find(t => isInMonth(t) || isRepeatedOverMonth(t))
+  );
+};
 
 export const getTransactions = state =>
   omit(get(state, 'transactions'), ['loading']);

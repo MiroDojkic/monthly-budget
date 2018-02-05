@@ -14,6 +14,7 @@ import formats, {
 import { primaryGradient } from '../../constants/colors';
 import actions from '../../actions/transactions';
 import { getTransactionByDate } from '../../selectors/transactions';
+import transactions from '../../actions/transactions';
 
 const Grid = styled.div`
   display: grid;
@@ -81,8 +82,23 @@ export default class Monthly extends React.Component {
   render() {
     const { getTransactionByDate } = this.props;
     const { selectedDate } = this.state;
-    const { total, expenses, incomeTotal } = getTransactionByDate(selectedDate);
+    const transactions = getTransactionByDate(selectedDate);
 
+    const incomeTotal = transactions
+      ? transactions.reduce(
+          (sum, t) => (t.type === 'income' ? sum + t.value : sum),
+          0
+        )
+      : 0;
+
+    const expenses =
+      transactions && transactions.filter(t => t.type === 'expense');
+
+    const expensesTotal = expenses
+      ? expenses.reduce((sum, t) => sum + t.value, 0)
+      : 0;
+
+    const total = incomeTotal + expensesTotal;
     return (
       <Grid>
         <Header>
