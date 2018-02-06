@@ -10,7 +10,17 @@ export const State = {
   transactions: ['transactions', 'transactions'],
   loading: ['transactions', 'loading', L.valueOr(false)],
   updatedAt: ['transactions', 'updatedAt'],
-  error: ['transactions', 'error']
+  error: ['transactions', 'error'],
+
+  intersectWith: transactions =>
+    L.filter(({ id }) => L.get(Transaction.byId(id), transactions)),
+
+  updateOnLoad: loaded => ({ transactions, loading, updatedAt, error }) => ({
+    error: null,
+    loading: false,
+    updatedAt: new Date(),
+    transactions: L.set(State.intersectWith(loaded), loaded, transactions)
+  })
 };
 
 export default store => ({
@@ -31,22 +41,7 @@ export default store => ({
         userid: 1,
         datefilter
       })
-      .then(loaded =>
-        L.modify(
-          State.root,
-          ({ transactions, loading, updatedAt, ...rest }) => ({
-            ...rest,
-            loading: false,
-            updatedAt: new Date(),
-            transactions: L.set(
-              L.filter(t => L.get(Transaction.byId(t.id), loaded)),
-              loaded,
-              transactions
-            )
-          }),
-          state
-        )
-      )
+      .then(loaded => L.modify(State.root, State.updateOnLoad(loaded), state))
       .catch(error => L.set(State.error, error, state));
   }
 });
