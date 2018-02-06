@@ -13,10 +13,11 @@ import('./font.css');
 
 const initialState = {
   transactions: {
+    transactions: [],
     loading: false,
-    updatedAt: null
-  },
-  error: null
+    updatedAt: null,
+    error: null
+  }
 };
 
 const store =

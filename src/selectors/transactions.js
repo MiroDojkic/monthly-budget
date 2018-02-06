@@ -1,28 +1,10 @@
-import omit from 'lodash/omit';
-import get from 'lodash/get';
-import fecha from 'fecha';
-import formats from '../util/datetimes';
+import * as L from 'partial.lenses';
+import Transaction from '../models/transaction';
+import { State } from '../actions/transactions';
 
-const defaultTransaction = { total: 0, incomeTotal: 0, expenses: [] };
-const getMonthKey = date => fecha.format(date, formats.TRUNC_TO_MONTH);
+export const getTransactionsByDate = state => date =>
+  L.get([State.transactions, Transaction.byMonth(date)], state);
 
-export const getTransactionByDate = state => date => {
-  const transactions = get(state, `transactions.transactions`, []);
+export const getLoading = L.get(State.loading);
 
-  const isInMonth = t => getMonthKey(t.createdAt) === getMonthKey(date);
-
-  const isRepeatedOverMonth = t =>
-    t.repeat === 'monthly' && t.created_at <= date && t.repeat_until >= date;
-
-  return (
-    transactions &&
-    transactions.find(t => isInMonth(t) || isRepeatedOverMonth(t))
-  );
-};
-
-export const getTransactions = state =>
-  omit(get(state, 'transactions'), ['loading']);
-
-export const getLoading = state => get(state, 'transactions.loading', false);
-
-export const getError = state => get(state, 'transactions.error', null);
+export const getError = state => L.get(State.error);

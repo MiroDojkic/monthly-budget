@@ -1,44 +1,52 @@
 import * as React from 'react';
-import get from 'lodash/get';
+import * as L from 'partial.lenses';
 import api from '../util/api';
+import Transaction from '../models/transaction';
 
-const retentionTime = 600000; // 10 minutes in ms
+// const retentionTime = 600000; // 10 minutes in ms
+
+export const State = {
+  root: 'transactions',
+  transactions: ['transactions', 'transactions'],
+  loading: ['transactions', 'loading', L.valueOr(false)],
+  updatedAt: ['transactions', 'updatedAt'],
+  error: ['transactions', 'error']
+};
 
 export default store => ({
   loadByDate: (state, datefilter) => {
-    const transactions = get(state, 'transactions');
-    const lastUpdatedAt = get(transactions, 'updatedAt');
-    const cacheIsExpired =
-      !lastUpdatedAt || lastUpdatedAt - new Date() > retentionTime;
+    // const lastUpdatedAt = L.get(State.updatedAt, state);
 
-    if (!navigator.onLine || !cacheIsExpired) {
+    // const cacheExpired =
+    //   !lastUpdatedAt || lastUpdatedAt - new Date() > retentionTime;
+
+    if (!navigator.onLine) {
       return;
     }
 
-    store.setState({
-      transactions: {
-        ...transactions,
-        loading: true
-      }
-    });
+    store.setState(L.set(State.loading, true, state));
 
     return api
       .getAll('user_transactions_by_date', {
         userid: 1,
         datefilter
       })
-      .then(result => ({
-        ...transactions,
-        transactions: [...get(transactions, 'transactions', []), ...result],
-        updatedAt: new Date(),
-        loading: false
-      }))
-      .catch(error => ({
-        transactions: {
-          ...transactions,
-          loading: false
-        },
-        error: error
-      }));
+      .then(loaded =>
+        L.modify(
+          State.root,
+          ({ transactions, loading, updatedAt, ...rest }) => ({
+            ...rest,
+            loading: false,
+            updatedAt: new Date(),
+            transactions: L.set(
+              L.filter(t => L.get(Transaction.byId(t.id), loaded)),
+              loaded,
+              transactions
+            )
+          }),
+          state
+        )
+      )
+      .catch(error => L.set(State.error, error, state));
   }
 });

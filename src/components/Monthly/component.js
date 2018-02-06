@@ -13,8 +13,7 @@ import formats, {
 } from '../../util/datetimes';
 import { primaryGradient } from '../../constants/colors';
 import actions from '../../actions/transactions';
-import { getTransactionByDate } from '../../selectors/transactions';
-import transactions from '../../actions/transactions';
+import { getTransactionsByDate } from '../../selectors/transactions';
 
 const Grid = styled.div`
   display: grid;
@@ -42,7 +41,7 @@ const Header = styled.header`
 
 @connect(
   state => ({
-    getTransactionByDate: getTransactionByDate(state)
+    getTransactionsByDate: getTransactionsByDate(state)
   }),
   actions
 )
@@ -80,25 +79,27 @@ export default class Monthly extends React.Component {
   };
 
   render() {
-    const { getTransactionByDate } = this.props;
+    const { getTransactionsByDate } = this.props;
     const { selectedDate } = this.state;
-    const transactions = getTransactionByDate(selectedDate);
+    const transactions = getTransactionsByDate(selectedDate);
 
-    const incomeTotal = transactions
-      ? transactions.reduce(
-          (sum, t) => (t.type === 'income' ? sum + t.value : sum),
-          0
-        )
-      : 0;
+    const incomeTotal =
+      transactions && transactions.length > 0
+        ? transactions.reduce(
+            (sum, t) => (t.type === 'income' ? sum + t.value : sum),
+            0
+          )
+        : 0;
 
     const expenses =
       transactions && transactions.filter(t => t.type === 'expense');
 
-    const expensesTotal = expenses
-      ? expenses.reduce((sum, t) => sum + t.value, 0)
-      : 0;
+    const expensesTotal =
+      expenses && expenses.length > 0
+        ? expenses.reduce((sum, t) => sum + t.value, 0)
+        : 0;
 
-    const total = incomeTotal + expensesTotal;
+    const total = incomeTotal - expensesTotal;
     return (
       <Grid>
         <Header>
