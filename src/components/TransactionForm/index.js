@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styled, { css } from 'react-emotion';
-import first from 'lodash/first';
-import get from 'lodash/get';
+import * as L from 'partial.lenses';
 import Select from '../Select';
 import Button from '../Button';
 import Checkmark from '../Icons/Checkmark';
@@ -112,8 +111,8 @@ const activeCls = css`
 
 export default class TransactionForm extends React.Component {
   state = {
-    type: get(first(typeOptions), 'value'),
-    repeat: get(first(repeatOptions), 'value')
+    type: L.get([L.first, 'value'], typeOptions),
+    repeat: L.get([L.first, 'value'], repeatOptions)
   };
 
   onSubmit = e => {
