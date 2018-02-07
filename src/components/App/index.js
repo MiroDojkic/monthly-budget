@@ -15,8 +15,8 @@ const initialState = {
   transactions: {
     transactions: [],
     loading: false,
-    updatedAt: null,
-    error: null
+    error: null,
+    cacheMap: {}
   }
 };
 
