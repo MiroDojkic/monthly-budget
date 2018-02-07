@@ -25,7 +25,7 @@ export const State = {
     error: null,
     loading: false,
     transactions: L.set(State.intersectWith(loaded), loaded, transactions),
-    cacheMap: L.set(L.prop(cacheKey), new Date(), cacheMap)
+    cacheMap: L.set(cacheKey, new Date(), cacheMap)
   })
 };
 
