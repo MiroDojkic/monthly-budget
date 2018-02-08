@@ -1,52 +1,56 @@
 import * as React from 'react';
-import get from 'lodash/get';
-import fecha from 'fecha';
-import { getUpdatedAt } from '../selectors/transactions';
+import * as L from 'partial.lenses';
+import Transaction from '../models/transaction';
 import api from '../util/api';
-import formats from '../util/datetimes';
+import { truncateToMonth } from '../util/datetimes';
 
 const retentionTime = 600000; // 10 minutes in ms
 
+export const State = {
+  root: 'transactions',
+  transactions: ['transactions', 'transactions'],
+  loading: ['transactions', 'loading', L.valueOr(false)],
+  cacheMap: ['transactions', 'cacheMap'],
+  error: ['transactions', 'error'],
+
+  intersectWith: transactions =>
+    L.filter(({ id }) => L.get(Transaction.byId(id), transactions)),
+
+  updateOnLoad: (cacheKey, loaded) => ({
+    transactions,
+    loading,
+    cacheMap,
+    error
+  }) => ({
+    error: null,
+    loading: false,
+    transactions: L.set(State.intersectWith(loaded), loaded, transactions),
+    cacheMap: L.set(cacheKey, new Date(), cacheMap)
+  })
+};
+
 export default store => ({
   loadByDate: (state, datefilter) => {
-    const monthKey = fecha.format(datefilter, formats.TRUNC_TO_MONTH);
-    const transactions = get(state, 'transactions');
-    const lastUpdatedAt = getUpdatedAt(state)(monthKey);
-    const cacheIsExpired =
+    const cacheKey = L.get(L.normalize(truncateToMonth), datefilter);
+    const lastUpdatedAt = L.get([State.cacheMap, cacheKey], state);
+
+    const cacheExpired =
       !lastUpdatedAt || lastUpdatedAt - new Date() > retentionTime;
 
-    if (!navigator.onLine || !cacheIsExpired) {
+    if (!navigator.onLine || !cacheExpired) {
       return;
     }
 
-    store.setState({
-      transactions: {
-        ...transactions,
-        loading: true
-      }
-    });
+    store.setState(L.set(State.loading, true, state));
 
     return api
-      .get('user_transactions_by_date', {
+      .getAll('user_transactions_by_date', {
         userid: 1,
         datefilter
       })
-      .then(({ result }) => ({
-        transactions: {
-          ...transactions,
-          loading: false,
-          [monthKey]: {
-            ...result,
-            updatedAt: new Date()
-          }
-        }
-      }))
-      .catch(error => ({
-        transactions: {
-          ...transactions,
-          loading: false
-        },
-        error: error
-      }));
+      .then(loaded =>
+        L.modify(State.root, State.updateOnLoad(cacheKey, loaded), state)
+      )
+      .catch(error => L.set(State.error, error, state));
   }
 });

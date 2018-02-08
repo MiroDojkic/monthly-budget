@@ -13,7 +13,11 @@ import formats, {
 } from '../../util/datetimes';
 import { primaryGradient } from '../../constants/colors';
 import actions from '../../actions/transactions';
-import { getTransactionByDate } from '../../selectors/transactions';
+import {
+  getTotalByDate,
+  getExpensesByDate,
+  getIncomeTotalByDate
+} from '../../selectors/transactions';
 
 const Grid = styled.div`
   display: grid;
@@ -41,7 +45,9 @@ const Header = styled.header`
 
 @connect(
   state => ({
-    getTransactionByDate: getTransactionByDate(state)
+    getExpensesByDate: getExpensesByDate(state),
+    getIncomeTotalByDate: getIncomeTotalByDate(state),
+    getTotalByDate: getTotalByDate(state)
   }),
   actions
 )
@@ -79,9 +85,17 @@ export default class Monthly extends React.Component {
   };
 
   render() {
-    const { getTransactionByDate } = this.props;
+    const {
+      getIncomeTotalByDate,
+      getExpensesByDate,
+      getTotalByDate
+    } = this.props;
+
     const { selectedDate } = this.state;
-    const { total, expenses, incomeTotal } = getTransactionByDate(selectedDate);
+
+    const expenses = getExpensesByDate(selectedDate);
+    const incomeTotal = getIncomeTotalByDate(selectedDate);
+    const total = getTotalByDate(selectedDate);
 
     return (
       <Grid>

@@ -13,9 +13,11 @@ import('./font.css');
 
 const initialState = {
   transactions: {
-    loading: false
-  },
-  error: null
+    transactions: [],
+    loading: false,
+    error: null,
+    cacheMap: {}
+  }
 };
 
 const store =
