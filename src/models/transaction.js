@@ -2,11 +2,15 @@ import * as L from 'partial.lenses';
 import { isAppliedToMonth } from '../util/transactions';
 
 const Transaction = {
-  default: { total: 0, incomeTotal: 0, expenses: [] },
+  Type: { income: 'income', expense: 'expense' },
 
   byMonth: date => L.filter(transaction => isAppliedToMonth(transaction, date)),
 
-  byId: id => L.find(transaction => transaction.id === id)
+  byType: type => L.filter(L.get(['type', L.is(type)])),
+
+  sum: L.sum([L.elems, 'value']),
+
+  byId: id => L.find(L.get(['id', L.is(id)]))
 };
 
 export default Transaction;
