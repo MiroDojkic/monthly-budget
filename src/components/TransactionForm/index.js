@@ -1,6 +1,8 @@
 import * as React from 'react';
 import styled, { css } from 'react-emotion';
+import { connect } from 'unistore/react';
 import * as L from 'partial.lenses';
+import actions from '../../actions/transactions';
 import Select from '../Select';
 import Button from '../Button';
 import Checkmark from '../Icons/Checkmark';
@@ -109,6 +111,7 @@ const activeCls = css`
   background: ${loaderLight};
 `;
 
+@connect(null, actions)
 export default class TransactionForm extends React.Component {
   state = {
     type: L.get([L.first, 'value'], typeOptions),
@@ -117,10 +120,16 @@ export default class TransactionForm extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
+    const { date, add } = this.props;
+    add(date, this.state);
   };
 
   onChange = field => value => {
     this.setState({ [field]: value });
+  };
+
+  onInputChange = field => e => {
+    this.setState({ [field]: e.currentTarget.value });
   };
 
   render() {
@@ -144,10 +153,20 @@ export default class TransactionForm extends React.Component {
           </Confirm>
         </Header>
         <Field className={nameFieldCls} htmlFor="transaction-name">
-          <Label>Name</Label> <Input id="transcation-name" type="text" />
+          <Label>Name</Label>
+          <Input
+            id="transcation-name"
+            type="text"
+            onChange={this.onInputChange('name')}
+          />
         </Field>
         <Field className={valueFieldCls} htmlFor="transaction-value">
-          <Label>Value</Label> <Input id="transcation-value" type="number" />
+          <Label>Value</Label>
+          <Input
+            id="transcation-value"
+            type="number"
+            onChange={this.onInputChange('value')}
+          />
         </Field>
         <Field className={repeatFieldCls}>
           <Label>Repeat</Label>

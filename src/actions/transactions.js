@@ -52,5 +52,12 @@ export default store => ({
         L.modify(State.root, State.updateOnLoad(cacheKey, loaded), state)
       )
       .catch(error => L.set(State.error, error, state));
-  }
+  },
+
+  add: (state, date, { value, ...rest }) =>
+    L.set(
+      [State.transactions, L.append],
+      { ...rest, value: parseFloat(value), created_at: date },
+      state
+    )
 });
