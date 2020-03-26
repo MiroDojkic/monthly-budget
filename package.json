@@ -56,7 +56,7 @@
     "react-slick": "^0.16.0",
     "react-spinners": "^0.2.5",
     "slick-carousel": "^1.8.1",
-    "unissist": "^1.1.1",
+    "unissist": "^1.4.0",
     "unistore": "^3.0.4"
   }
 }
