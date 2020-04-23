@@ -41,7 +41,7 @@
     "workbox-cli": "^2.1.2"
   },
   "dependencies": {
-    "create-react-class": "^15.6.2",
+    "create-react-class": "^15.6.3",
     "emotion": "^8.0.12",
     "fecha": "^2.3.2",
     "lodash": "^4.17.13",
