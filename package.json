@@ -35,7 +35,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-prettier": "^2.7.0",
     "eslint-plugin-react": "^7.19.0",
-    "parcel-bundler": "^1.5.0",
+    "parcel-bundler": "^1.10.0",
     "prettier": "^2.0.5",
     "surge": "^0.21.3",
     "workbox-cli": "^2.1.2"
