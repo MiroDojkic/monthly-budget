@@ -5,7 +5,7 @@ import { Provider } from 'unistore/react';
 import persistStore from 'unissist';
 import indexedDBAdapter from 'unissist/integrations/indexdbAdapter';
 
-import { injectGlobal } from 'emotion';
+import { Global } from '@emotion/core';
 import { AppContainer } from 'react-hot-loader';
 import Monthly from '../Monthly';
 
@@ -16,8 +16,8 @@ const initialState = {
     transactions: [],
     loading: false,
     error: null,
-    cacheMap: {}
-  }
+    cacheMap: {},
+  },
 };
 
 const store =
@@ -28,32 +28,27 @@ const store =
 const adapter = indexedDBAdapter();
 persistStore(store, adapter);
 
-/* eslint-disable no-unused-expressions */
-injectGlobal`
-* {
-  box-sizing: border-box;
-  font-size: 16px;
-  font-family: "Roboto", sans-serif;
-
-  input,
-  textarea,
-  button,
-  select,
-  label,
-  a {
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-  }
-}
-`;
-/* eslint-enable no-unusued-expressions */
-
 class App extends React.Component {
   render() {
     return (
       <AppContainer>
-        <Provider store={store}>
-          <Monthly />
-        </Provider>
+        <>
+          <Global
+            styles={{
+              '*': {
+                boxSizing: 'border-box',
+                fontSize: '16px',
+                fontFamily: 'Roboto, sans-serif',
+              },
+              'input, textarea, button, select, label, a': {
+                WebkitTapHighlightColor: 'rgba(0,0,0,0)',
+              },
+            }}
+          />
+          <Provider store={store}>
+            <Monthly />
+          </Provider>
+        </>
       </AppContainer>
     );
   }

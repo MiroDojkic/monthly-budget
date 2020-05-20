@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'react-emotion';
+import styled from '@emotion/styled';
 import { connect } from 'unistore/react';
 import ItemLoader from './ItemLoader';
 import { getLoading } from '../../selectors/transactions';
@@ -24,7 +24,7 @@ const ListingItem = styled.div`
 
   svg {
     width: 100%;
-    height: 1vh;,
+    height: 1vh;
   }
 `;
 
@@ -70,23 +70,22 @@ const Expenses = ({ expenses }) =>
       ))
     : null;
 
-const Transactions = connect(state => ({
-  loading: getLoading(state)
-}))(
-  ({ loading, incomeTotal, expenses, className }) =>
-    loading ? (
-      <Loader />
-    ) : (
-      <Listing className={className}>
-        {incomeTotal ? (
-          <ListingItem>
-            <IncomeName>income</IncomeName>
-            <IncomeValue>${incomeTotal}</IncomeValue>
-          </ListingItem>
-        ) : null}
-        <Expenses expenses={expenses} />
-      </Listing>
-    )
+const Transactions = connect((state) => ({
+  loading: getLoading(state),
+}))(({ loading, incomeTotal, expenses, className }) =>
+  loading ? (
+    <Loader />
+  ) : (
+    <Listing className={className}>
+      {incomeTotal ? (
+        <ListingItem>
+          <IncomeName>income</IncomeName>
+          <IncomeValue>${incomeTotal}</IncomeValue>
+        </ListingItem>
+      ) : null}
+      <Expenses expenses={expenses} />
+    </Listing>
+  )
 );
 
 export default Transactions;

@@ -1,7 +1,8 @@
 import * as React from 'react';
-import styled, { css } from 'react-emotion';
+import { css } from '@emotion/core';
+import styled from '@emotion/styled';
 import noop from '../../util/noop';
-import { textDark, borderLight, white } from '../../constants/colors';
+import { textDark, borderLight } from '../../constants/colors';
 
 const Group = styled.div`
   display: flex;
@@ -34,7 +35,7 @@ const Label = styled.label`
 
   ${({ checked, checkedClassName, activeClassName }) => css`
     ${checked &&
-      `
+    `
         color: white;
         background: linear-gradient(
           247.07deg,
@@ -78,7 +79,7 @@ const Option = ({
   checked,
   labelClassName,
   checkedClassName,
-  activeClassName
+  activeClassName,
 }) => (
   <Label
     className={labelClassName}
@@ -99,10 +100,10 @@ const Option = ({
 
 export default class Select extends React.Component {
   static defaultProps = {
-    onChange: noop
+    onChange: noop,
   };
 
-  onChange = value => () => {
+  onChange = (value) => () => {
     this.props.onChange(value);
   };
 
@@ -114,7 +115,7 @@ export default class Select extends React.Component {
       className,
       labelClassName,
       checkedClassName,
-      activeClassName
+      activeClassName,
     } = this.props;
 
     return (

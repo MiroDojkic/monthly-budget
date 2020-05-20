@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cx, css } from 'emotion';
+import { ClassNames, css } from '@emotion/core';
 import debounce from 'lodash/debounce';
 import Button from '../../Button';
 import ArrowLeftIcon from '../../Icons/ArrowLeft';
@@ -20,7 +20,7 @@ export default class ArrowButton extends React.Component {
     if (onClick && onClick !== this.props.onClick) {
       const debouncedHandler = debounce(onClick, 150);
 
-      this.onClick = e => {
+      this.onClick = (e) => {
         e.persist();
         debouncedHandler(e);
       };
@@ -31,23 +31,27 @@ export default class ArrowButton extends React.Component {
     const { className, style, type = 'left' } = this.props;
 
     return (
-      <Button>
-        {type === 'left' ? (
-          <ArrowLeftIcon
-            aria-label="Previous"
-            style={style}
-            onClick={this.onClick}
-            className={cx(cls, className)}
-          />
-        ) : (
-          <ArrowRightIcon
-            aria-label="Next"
-            style={style}
-            onClick={this.onClick}
-            className={cx(cls, className)}
-          />
+      <ClassNames>
+        {({ cx }) => (
+          <Button>
+            {type === 'left' ? (
+              <ArrowLeftIcon
+                aria-label="Previous"
+                style={style}
+                onClick={this.onClick}
+                className={cx(cls, className)}
+              />
+            ) : (
+              <ArrowRightIcon
+                aria-label="Next"
+                style={style}
+                onClick={this.onClick}
+                className={cx(cls, className)}
+              />
+            )}
+          </Button>
         )}
-      </Button>
+      </ClassNames>
     );
   }
 }

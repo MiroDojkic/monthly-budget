@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'react-emotion';
+import styled from '@emotion/styled';
 import { connect } from 'unistore/react';
 import Loader from './Loader';
 import { getLoading } from '../../selectors/transactions';
@@ -37,8 +37,8 @@ const Name = styled.div`
   font-weight: normal;
 `;
 
-const Total = connect(state => ({
-  loading: getLoading(state)
+const Total = connect((state) => ({
+  loading: getLoading(state),
 }))(({ total, loading, className }) => (
   <Wrapper className={className}>
     {loading ? (

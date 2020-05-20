@@ -1,5 +1,6 @@
 import * as React from 'react';
-import styled, { css } from 'react-emotion';
+import { css } from '@emotion/core';
+import styled from '@emotion/styled';
 import Button from '../Button';
 import TransactionForm from '../TransactionForm';
 import RefreshIcon from '../Icons/Refresh';
@@ -55,7 +56,7 @@ const addButtonCls = css`
 
 export default class ActionsMenu extends React.Component {
   state = {
-    isFormOpen: false
+    isFormOpen: false,
   };
 
   onSync = () => console.log('Sync');
