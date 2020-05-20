@@ -14,14 +14,10 @@ const isAppliedToMonth = date => transaction =>
 
 const Transaction = {
   Type: { income: 'income', expense: 'expense' },
-
   byMonth: date => L.filter(isAppliedToMonth(date)),
-
   byType: type => L.filter(L.get(['type', L.is(type)])),
-
   sum: L.sum([L.elems, 'value']),
-
-  byId: id => L.find(L.get(['id', L.is(id)]))
+  byId: id => L.find(L.get(['id', L.is(id)])),
 };
 
 export default Transaction;

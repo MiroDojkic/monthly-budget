@@ -37,7 +37,7 @@ const Name = styled.div`
   font-weight: normal;
 `;
 
-const Total = connect((state) => ({
+const Total = connect(state => ({
   loading: getLoading(state),
 }))(({ total, loading, className }) => (
   <Wrapper className={className}>

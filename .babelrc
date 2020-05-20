@@ -5,6 +5,13 @@
     }],
     ["@babel/plugin-proposal-class-properties", {
       "loose": true
-    }]
-  ]
+    }],
+    "transform-inline-environment-variables",
+    ["@babel/plugin-transform-react-jsx", {
+      "pragma": "___EmotionJSX", // default pragma is React.createElement
+      "pragmaFrag": "React.Fragment" // default is React.Fragment
+    }],
+    "babel-plugin-emotion"
+  ],
+  "presets": ["@emotion/babel-preset-css-prop"]
 }

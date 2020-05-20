@@ -1,28 +1,16 @@
 import React from 'react';
-import { ClassNames, Global, css } from '@emotion/core';
+import styled from '@emotion/styled';
 import * as L from 'partial.lenses';
-import Carousel from 'react-slick';
-import ArrowButton from './ArrowButton';
-import { white } from '../../constants/colors';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
-// For some reason, parcel breaks when 'react-emotion'
-// is imported here, therefore we can't use 'styled'
-const wrapperCls = css`
+const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const carouselCls = css`
-  width: 11.25rem;
-
-  * {
-    min-width: 0;
-    min-height: 0;
-  }
-`;
-
-const draggable = css`
+const Draggable = styled.div`
   cursor: move;
   cursor: grab;
   cursor: -moz-grab;
@@ -36,98 +24,56 @@ const draggable = css`
 `;
 
 export default class CarouselComponent extends React.Component {
-  onChange = (index) => {
+  state = { current: 1 };
+
+  onChange = index => {
     const {
       onChange,
-      dynamic,
       onLastItemRendered,
       onFirstItemRendered,
       items,
     } = this.props;
+    console.log('CHAING');
 
     if (items[index]) {
       onChange(items[index]);
-    } else {
-      throw new Error(
-        `Cannot access index ${index} in array of items: ${items}.`
+    }
+
+    if (index === 0 && onFirstItemRendered) {
+      this.setState({ current: 1 }, () =>
+        onFirstItemRendered(L.get(L.first, items)),
       );
     }
 
-    if (dynamic) {
-      if (index === 0 && onFirstItemRendered) {
-        const carouselEl = L.get(['carousel', 'innerSlider'], this);
-
-        // There is no interface that allows us to control state of the carousel,
-        // therefore we force this in an ugly way by calling setState on ref.
-        // Would be nice to fix it when time allows.
-        if (carouselEl) {
-          carouselEl.setState({ currentSlide: 1 }, () =>
-            onFirstItemRendered(L.get(L.first, items))
-          );
-        } else {
-          throw new Error('Cannot find carousel dom element');
-        }
-      }
-
-      if (index === items.length - 1 && onLastItemRendered) {
-        onLastItemRendered(L.get(L.last, items));
-      }
+    if (index === items.length - 1 && onLastItemRendered) {
+      onLastItemRendered(L.get(L.last, items));
     }
   };
 
   renderItems = () => {
     const { items, renderItem } = this.props;
-    return items.map((item) => (
-      <div className={draggable} key={`carousel-item-${item}`}>
-        {renderItem(item)}
-      </div>
+    return items.map(item => (
+      <Draggable key={`carousel-item-${item}`}>{renderItem(item)}</Draggable>
     ));
   };
 
-  render() {
-    const settings = {
-      infinite: false,
-      centerMode: true,
-      centerPadding: 0,
-      slidesToShow: 1,
-      initialSlide: 1,
-      focusOnSelect: true,
-      speed: 150,
-    };
+  update = index => {
+    this.setState({ current: index });
+  };
 
+  render() {
+    const { current } = this.state;
+    const { className } = this.props;
     return (
-      <ClassNames>
-        {({ cx }) => (
-          <div className={cx(wrapperCls, this.props.className)}>
-            <Global
-              style={{
-                '.slick-slide': {
-                  h5: {
-                    display: 'flex',
-                    justifyContent: 'center',
-                    color: white,
-                    fontSize: '1.2rem',
-                    fontWeight: 'normal',
-                    textTransform: 'uppercase',
-                  },
-                },
-              }}
-            />
-            <Carousel
-              ref={(carousel) => {
-                this.carousel = carousel;
-              }}
-              prevArrow={<ArrowButton type="left" />}
-              nextArrow={<ArrowButton type="right" />}
-              className={carouselCls}
-              afterChange={this.onChange}
-              {...settings}
-            >
-              {this.renderItems()}
-            </Carousel>
-          </div>
-        )}
-      </ClassNames>
+      <Container className={className}>
+        <Carousel
+          centerMode
+          selectedItem={current}
+          onChange={this.onChange}
+          onClickThumb={this.onChange}
+        />
+        {this.renderItems()}
+      </Container>
     );
   }
 }

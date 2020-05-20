@@ -45,12 +45,12 @@ const Header = styled.header`
 `;
 
 @connect(
-  (state) => ({
+  state => ({
     getExpensesByDate: getExpensesByDate(state),
     getIncomeTotalByDate: getIncomeTotalByDate(state),
     getTotalByDate: getTotalByDate(state),
   }),
-  actions
+  actions,
 )
 export default class Monthly extends React.Component {
   componentWillMount() {
@@ -62,23 +62,23 @@ export default class Monthly extends React.Component {
     selectedDate: new Date(),
   };
 
-  onFirstMonthRendered = (firstMonth) => {
+  onFirstMonthRendered = firstMonth => {
     const previous = getPreviousMonth(firstMonth);
-    this.setState((state) => ({
+    this.setState(state => ({
       dates: [previous, ...state.dates],
     }));
   };
 
-  onLastMonthRendered = (lastMonth) => {
+  onLastMonthRendered = lastMonth => {
     const next = getNextMonth(lastMonth);
-    this.setState((state) => ({
+    this.setState(state => ({
       dates: [...state.dates, next],
     }));
   };
 
-  renderMonth = (date) => <h5>{fecha.format(date, formats.MONTH_LONG)}</h5>;
+  renderMonth = date => <h5>{fecha.format(date, formats.MONTH_LONG)}</h5>;
 
-  onChange = (date) => {
+  onChange = date => {
     this.setState({ selectedDate: date });
     this.props.loadByDate(date);
   };
@@ -100,7 +100,6 @@ export default class Monthly extends React.Component {
       <Grid>
         <Header>
           <Carousel
-            dynamic
             onFirstItemRendered={this.onFirstMonthRendered}
             onLastItemRendered={this.onLastMonthRendered}
             items={this.state.dates}

@@ -32,7 +32,7 @@ const Loader = () => (
   <Listing>
     {emptyIterable(4).map((_, idx) => (
       // eslint-disable-next-line react/no-array-index-key
-      <ListingItem key={`item-loader-${idx}`} loading>
+      <ListingItem key={`item-loader-${idx}`}>
         <ItemLoader />
       </ListingItem>
     ))}
@@ -70,7 +70,7 @@ const Expenses = ({ expenses }) =>
       ))
     : null;
 
-const Transactions = connect((state) => ({
+const Transactions = connect(state => ({
   loading: getLoading(state),
 }))(({ loading, incomeTotal, expenses, className }) =>
   loading ? (
@@ -85,7 +85,7 @@ const Transactions = connect((state) => ({
       ) : null}
       <Expenses expenses={expenses} />
     </Listing>
-  )
+  ),
 );
 
 export default Transactions;
