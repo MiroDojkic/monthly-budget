@@ -1,0 +1,28 @@
+{
+  "transactions": [
+    {
+      "id": 1,
+      "type": "expense",
+      "created_at": "2020-04-16",
+      "value": 5
+    }, 
+    {
+      "id": 2,
+      "type": "expense",
+      "created_at": "2020-04-16",
+      "value": 5
+    }, 
+    {
+      "id": 3,
+      "type": "expense",
+      "created_at": "2020-04-16",
+      "value": 5
+    }, 
+    {
+      "id": 4,
+      "type": "expense",
+      "created_at": "2020-04-16",
+      "value": 5
+    }
+  ]
+}
