@@ -1,5 +1,7 @@
 const config = {
-  singleQuote: true
+  singleQuote: true,
+  trailingComma: 'all',
+  arrowParens: 'avoid',
 };
 
 module.exports = config;
