@@ -144,13 +144,13 @@ export default class TransactionForm extends React.Component {
             <Checkmark />
           </Confirm>
         </Header>
-        <Field className={nameFieldCls} htmlFor="transaction-name">
+        <Field css={nameFieldCls} htmlFor="transaction-name">
           <Label>Name</Label> <Input id="transcation-name" type="text" />
         </Field>
-        <Field className={valueFieldCls} htmlFor="transaction-value">
+        <Field css={valueFieldCls} htmlFor="transaction-value">
           <Label>Value</Label> <Input id="transcation-value" type="number" />
         </Field>
-        <Field className={repeatFieldCls}>
+        <Field css={repeatFieldCls}>
           <Label>Repeat</Label>
           <Select
             onChange={this.onChange('repeat')}

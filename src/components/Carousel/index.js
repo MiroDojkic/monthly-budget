@@ -2,8 +2,6 @@ import React from 'react';
 import { ClassNames, Global, css } from '@emotion/core';
 import * as L from 'partial.lenses';
 import Carousel from 'react-slick';
-// import 'slick-carousel/slick/slick.css';
-// import 'slick-carousel/slick/slick-theme.css';
 import ArrowButton from './ArrowButton';
 import { white } from '../../constants/colors';
 

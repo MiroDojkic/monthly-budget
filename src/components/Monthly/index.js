@@ -76,9 +76,7 @@ export default class Monthly extends React.Component {
     }));
   };
 
-  renderMonth = (date, idx) => (
-    <h5>{fecha.format(date, formats.MONTH_LONG)}</h5>
-  );
+  renderMonth = (date) => <h5>{fecha.format(date, formats.MONTH_LONG)}</h5>;
 
   onChange = (date) => {
     this.setState({ selectedDate: date });
@@ -108,13 +106,13 @@ export default class Monthly extends React.Component {
             items={this.state.dates}
             renderItem={this.renderMonth}
             onChange={this.onChange}
-            className={css`
+            css={css`
               grid-area: carousel;
             `}
           />
           <Total
             total={total}
-            className={css`
+            css={css`
               grid-area: total;
             `}
           />
@@ -122,13 +120,13 @@ export default class Monthly extends React.Component {
         <Transactions
           incomeTotal={incomeTotal}
           expenses={expenses}
-          className={css`
+          css={css`
             grid-area: listing;
           `}
         />
         <ActionsMenu
           selectedDate={selectedDate}
-          className={css`
+          css={css`
             grid-area: buttons;
           `}
         />
