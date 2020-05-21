@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import * as L from 'partial.lenses';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import Carousel from 'nuka-carousel';
+import ArrowButton from './ArrowButton';
 
 const Container = styled.div`
   display: flex;
@@ -23,57 +23,53 @@ const Draggable = styled.div`
   }
 `;
 
-export default class CarouselComponent extends React.Component {
-  state = { current: 1 };
-
-  onChange = index => {
-    const {
-      onChange,
-      onLastItemRendered,
-      onFirstItemRendered,
-      items,
-    } = this.props;
-    console.log('CHAING');
-
-    if (items[index]) {
-      onChange(items[index]);
-    }
-
-    if (index === 0 && onFirstItemRendered) {
-      this.setState({ current: 1 }, () =>
-        onFirstItemRendered(L.get(L.first, items)),
-      );
-    }
-
-    if (index === items.length - 1 && onLastItemRendered) {
-      onLastItemRendered(L.get(L.last, items));
+const CarouselComponent = ({
+  activeItemIndex,
+  items,
+  renderItem,
+  className,
+  onActiveItemChange,
+  onLastItemActive,
+  onFirstItemActive,
+}) => {
+  const onChange = index => {
+    if (index === 0 && onFirstItemActive) {
+      onFirstItemActive(L.get(L.first, items));
+    } else if (index === items.length - 1 && onLastItemActive) {
+      onLastItemActive(L.get(L.last, items));
+    } else {
+      onActiveItemChange(index);
     }
   };
-
-  renderItems = () => {
-    const { items, renderItem } = this.props;
-    return items.map(item => (
-      <Draggable key={`carousel-item-${item}`}>{renderItem(item)}</Draggable>
-    ));
+  const previous = () => {
+    onChange(activeItemIndex - 1);
   };
-
-  update = index => {
-    this.setState({ current: index });
+  const next = () => {
+    onChange(activeItemIndex + 1);
   };
+  return (
+    <Container className={className}>
+      <Carousel
+        renderCenterLeftControls={() => (
+          <ArrowButton onClick={previous} type="left" />
+        )}
+        renderCenterRightControls={() => (
+          <ArrowButton onClick={next} type="right" />
+        )}
+        renderBottomCenterControls={() => null}
+        slideIndex={activeItemIndex}
+        afterSlide={onChange}
+        disableAnimation
+        dragging={false}
+      >
+        {items.map(item => (
+          <Draggable key={`carousel-item-${item}`}>
+            {renderItem(item)}
+          </Draggable>
+        ))}
+      </Carousel>
+    </Container>
+  );
+};
 
-  render() {
-    const { current } = this.state;
-    const { className } = this.props;
-    return (
-      <Container className={className}>
-        <Carousel
-          centerMode
-          selectedItem={current}
-          onChange={this.onChange}
-          onClickThumb={this.onChange}
-        />
-        {this.renderItems()}
-      </Container>
-    );
-  }
-}
+export default CarouselComponent;

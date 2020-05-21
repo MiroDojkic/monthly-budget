@@ -12,7 +12,7 @@ import formats, {
   getPreviousMonth,
   getNextMonth,
 } from '../../util/datetimes';
-import { primaryGradient } from '../../constants/colors';
+import { primaryGradient, white } from '../../constants/colors';
 import actions from '../../actions/transactions';
 import {
   getTotalByDate,
@@ -44,6 +44,12 @@ const Header = styled.header`
   background: ${primaryGradient};
 `;
 
+const H5 = styled.h5`
+  margin: 0;
+  text-align: center;
+  color: ${white};
+`;
+
 @connect(
   state => ({
     getExpensesByDate: getExpensesByDate(state),
@@ -56,55 +62,62 @@ export default class Monthly extends React.Component {
   componentWillMount() {
     this.props.loadByDate(new Date());
   }
-
   state = {
     dates: getInitialDates(),
-    selectedDate: new Date(),
+    activeDateIndex: 1,
   };
-
   onFirstMonthRendered = firstMonth => {
     const previous = getPreviousMonth(firstMonth);
-    this.setState(state => ({
-      dates: [previous, ...state.dates],
-    }));
+    this.setState(
+      state => ({
+        dates: [previous, ...state.dates],
+      }),
+      () => {
+        this.setState({ activeDateIndex: 1 });
+      },
+    );
   };
-
   onLastMonthRendered = lastMonth => {
     const next = getNextMonth(lastMonth);
-    this.setState(state => ({
-      dates: [...state.dates, next],
-    }));
+    this.setState(
+      state => ({
+        dates: [...state.dates, next],
+      }),
+      () =>
+        this.setState(state => ({
+          activeDateIndex: state.dates.length - 2,
+        })),
+    );
   };
-
-  renderMonth = date => <h5>{fecha.format(date, formats.MONTH_LONG)}</h5>;
-
-  onChange = date => {
-    this.setState({ selectedDate: date });
+  renderMonth = date => (
+    <H5>{fecha.format(date, formats.TRUNC_TO_MONTH_PRETTY)}</H5>
+  );
+  loadDate = index => {
+    this.setState({ activeDateIndex: index });
+    const date = this.state.dates[index];
     this.props.loadByDate(date);
   };
-
   render() {
     const {
       getIncomeTotalByDate,
       getExpensesByDate,
       getTotalByDate,
     } = this.props;
-
-    const { selectedDate } = this.state;
-
+    const { activeDateIndex } = this.state;
+    const selectedDate = this.state.dates[activeDateIndex];
     const expenses = getExpensesByDate(selectedDate);
     const incomeTotal = getIncomeTotalByDate(selectedDate);
     const total = getTotalByDate(selectedDate);
-
     return (
       <Grid>
         <Header>
           <Carousel
-            onFirstItemRendered={this.onFirstMonthRendered}
-            onLastItemRendered={this.onLastMonthRendered}
+            onFirstItemActive={this.onFirstMonthRendered}
+            onLastItemActive={this.onLastMonthRendered}
             items={this.state.dates}
+            activeItemIndex={activeDateIndex}
             renderItem={this.renderMonth}
-            onChange={this.onChange}
+            onActiveItemChange={this.loadDate}
             css={css`
               grid-area: carousel;
             `}

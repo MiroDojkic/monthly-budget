@@ -62,8 +62,8 @@ const Value = styled.span`
 
 const Expenses = ({ expenses }) =>
   expenses
-    ? expenses.map(({ name, value }) => (
-        <ListingItem key={name}>
+    ? expenses.map(({ name, created_at: tz, value }) => (
+        <ListingItem key={`${name}-${tz}`}>
           <Name>{name}</Name>
           <Value>- ${value}</Value>
         </ListingItem>
