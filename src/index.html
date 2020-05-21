@@ -31,16 +31,16 @@
   </div>
   <script async type="text/javascript" src="./app.js"></script>
   <script>
-    // if (!window.location.host.includes('localhost') && 'serviceWorker' in navigator) {
-    //   navigator.serviceWorker
-    //     .register('sw.js')
-    //     .then(function () {
-    //       console.log('Service Worker Registered');
-    //     })
-    //     .catch(function (e) {
-    //       console.error(e);
-    //     });
-    // }
+    if (!window.location.host.includes('localhost') && 'serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('../dist/sw.js')
+        .then(function () {
+          console.log('Service Worker Registered');
+        })
+        .catch(function (e) {
+          console.error(e);
+        });
+    }
   </script>
 </body>
 
