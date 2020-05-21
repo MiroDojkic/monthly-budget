@@ -1,7 +1,6 @@
 import * as React from 'react';
-import styled from 'react-emotion';
+import styled from '@emotion/styled';
 import { connect } from 'unistore/react';
-import { ClipLoader } from 'react-spinners';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -13,12 +12,7 @@ const Wrapper = styled.div`
 
 const Error = ({ error }) => <div>Errrrrror! {error}</div>;
 
-const Spinner = ({ show }) =>
-  show ? (
-    <Wrapper>
-      <ClipLoader color="#2f80ed" size={55} />
-    </Wrapper>
-  ) : null;
+const Spinner = ({ show }) => (show ? <Wrapper>Loading</Wrapper> : null);
 
 const Loader = connect('error')(({ error, timedOut, pastDelay }) => {
   const failed = error || timedOut;

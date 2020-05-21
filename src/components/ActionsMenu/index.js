@@ -1,5 +1,6 @@
 import * as React from 'react';
-import styled, { css } from 'react-emotion';
+import { css } from '@emotion/core';
+import styled from '@emotion/styled';
 import Button from '../Button';
 import TransactionForm from '../TransactionForm';
 import RefreshIcon from '../Icons/Refresh';
@@ -39,7 +40,7 @@ const buttonCls = css`
   fill: ${iconDark};
 `;
 
-const addButtonCls = css`
+const AddButton = styled(Button)`
   display: flex;
   min-width: 3.5rem;
   height: 3.5rem;
@@ -55,7 +56,7 @@ const addButtonCls = css`
 
 export default class ActionsMenu extends React.Component {
   state = {
-    isFormOpen: false
+    isFormOpen: false,
   };
 
   onSync = () => console.log('Sync');
@@ -72,27 +73,15 @@ export default class ActionsMenu extends React.Component {
 
     return (
       <Menu>
-        <Button aria-label="Sync" onClick={this.onSync} className={buttonCls}>
+        <Button aria-label="Sync" onClick={this.onSync} css={buttonCls}>
           <RefreshIcon />
         </Button>
         <ButtonWrapper>
-          <Button
-            aria-label="Add new"
-            onClick={this.onAdd}
-            className={addButtonCls}
-          >
-            <PlusIcon
-              className={css`
-                fill: white;
-              `}
-            />
-          </Button>
+          <AddButton aria-label="Add new" onClick={this.onAdd}>
+            <PlusIcon />
+          </AddButton>
         </ButtonWrapper>
-        <Button
-          aria-label="Settings"
-          onClick={this.onSettings}
-          className={buttonCls}
-        >
+        <Button aria-label="Settings" onClick={this.onSettings} css={buttonCls}>
           <SettingsIcon />
         </Button>
         {isFormOpen ? <Form date={selectedDate} /> : null}

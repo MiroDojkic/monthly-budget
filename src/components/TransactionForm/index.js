@@ -1,5 +1,6 @@
 import * as React from 'react';
-import styled, { css } from 'react-emotion';
+import { css } from '@emotion/core';
+import styled from '@emotion/styled';
 import * as L from 'partial.lenses';
 import Select from '../Select';
 import Button from '../Button';
@@ -12,19 +13,19 @@ import {
   iconDark,
   textLight,
   textDark,
-  loaderLight
+  loaderLight,
 } from '../../constants/colors';
 
 const typeOptions = [
   { label: 'Income', value: 'income' },
-  { label: 'Expense', value: 'expense' }
+  { label: 'Expense', value: 'expense' },
 ];
 
 const repeatOptions = [
   { label: 'Once', value: 'once' },
   { label: 'Weekly', value: 'weekly' },
   { label: 'Monthly', value: 'monthly' },
-  { label: 'Yearly', value: 'yearly' }
+  { label: 'Yearly', value: 'yearly' },
 ];
 
 const Form = styled.form`
@@ -112,14 +113,14 @@ const activeCls = css`
 export default class TransactionForm extends React.Component {
   state = {
     type: L.get([L.first, 'value'], typeOptions),
-    repeat: L.get([L.first, 'value'], repeatOptions)
+    repeat: L.get([L.first, 'value'], repeatOptions),
   };
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
   };
 
-  onChange = field => value => {
+  onChange = (field) => (value) => {
     this.setState({ [field]: value });
   };
 
@@ -143,13 +144,13 @@ export default class TransactionForm extends React.Component {
             <Checkmark />
           </Confirm>
         </Header>
-        <Field className={nameFieldCls} htmlFor="transaction-name">
+        <Field css={nameFieldCls} htmlFor="transaction-name">
           <Label>Name</Label> <Input id="transcation-name" type="text" />
         </Field>
-        <Field className={valueFieldCls} htmlFor="transaction-value">
+        <Field css={valueFieldCls} htmlFor="transaction-value">
           <Label>Value</Label> <Input id="transcation-value" type="number" />
         </Field>
-        <Field className={repeatFieldCls}>
+        <Field css={repeatFieldCls}>
           <Label>Repeat</Label>
           <Select
             onChange={this.onChange('repeat')}

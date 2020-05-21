@@ -7,9 +7,9 @@ export const getExpensesByDate = state => date =>
     [
       State.transactions,
       Transaction.byMonth(date),
-      Transaction.byType(Transaction.Type.expense)
+      Transaction.byType(Transaction.Type.expense),
     ],
-    state
+    state,
   );
 
 export const getIncomeTotalByDate = state => date =>
@@ -18,9 +18,9 @@ export const getIncomeTotalByDate = state => date =>
       State.transactions,
       Transaction.byMonth(date),
       Transaction.byType(Transaction.Type.income),
-      Transaction.sum
+      Transaction.sum,
     ],
-    state
+    state,
   );
 
 const getExpenseTotalByDate = state => date =>
@@ -29,9 +29,9 @@ const getExpenseTotalByDate = state => date =>
       State.transactions,
       Transaction.byMonth(date),
       Transaction.byType(Transaction.Type.expense),
-      Transaction.sum
+      Transaction.sum,
     ],
-    state
+    state,
   );
 
 export const getTotalByDate = state => date =>

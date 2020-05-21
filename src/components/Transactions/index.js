@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'react-emotion';
+import styled from '@emotion/styled';
 import { connect } from 'unistore/react';
 import ItemLoader from './ItemLoader';
 import { getLoading } from '../../selectors/transactions';
@@ -24,7 +24,7 @@ const ListingItem = styled.div`
 
   svg {
     width: 100%;
-    height: 1vh;,
+    height: 1vh;
   }
 `;
 
@@ -32,7 +32,7 @@ const Loader = () => (
   <Listing>
     {emptyIterable(4).map((_, idx) => (
       // eslint-disable-next-line react/no-array-index-key
-      <ListingItem key={`item-loader-${idx}`} loading>
+      <ListingItem key={`item-loader-${idx}`}>
         <ItemLoader />
       </ListingItem>
     ))}
@@ -62,8 +62,8 @@ const Value = styled.span`
 
 const Expenses = ({ expenses }) =>
   expenses
-    ? expenses.map(({ name, value }) => (
-        <ListingItem key={name}>
+    ? expenses.map(({ name, created_at: tz, value }) => (
+        <ListingItem key={`${name}-${tz}`}>
           <Name>{name}</Name>
           <Value>- ${value}</Value>
         </ListingItem>
@@ -71,22 +71,21 @@ const Expenses = ({ expenses }) =>
     : null;
 
 const Transactions = connect(state => ({
-  loading: getLoading(state)
-}))(
-  ({ loading, incomeTotal, expenses, className }) =>
-    loading ? (
-      <Loader />
-    ) : (
-      <Listing className={className}>
-        {incomeTotal ? (
-          <ListingItem>
-            <IncomeName>income</IncomeName>
-            <IncomeValue>${incomeTotal}</IncomeValue>
-          </ListingItem>
-        ) : null}
-        <Expenses expenses={expenses} />
-      </Listing>
-    )
+  loading: getLoading(state),
+}))(({ loading, incomeTotal, expenses, className }) =>
+  loading ? (
+    <Loader />
+  ) : (
+    <Listing className={className}>
+      {incomeTotal ? (
+        <ListingItem>
+          <IncomeName>income</IncomeName>
+          <IncomeValue>${incomeTotal}</IncomeValue>
+        </ListingItem>
+      ) : null}
+      <Expenses expenses={expenses} />
+    </Listing>
+  ),
 );
 
 export default Transactions;

@@ -1,22 +1,17 @@
 {
-  "presets": ["env", "react"],
-  "env": {
-    "production": {
-      "plugins": [
-        ["emotion", { "hoist": true }],
-        "transform-class-properties",
-        "transform-object-rest-spread",
-        "transform-decorators-legacy"
-      ]
-    },
-    "development": {
-      "plugins": [
-        ["emotion", { "sourceMap": true, "autoLabel": true }],
-        "react-hot-loader/babel",
-        "transform-class-properties",
-        "transform-object-rest-spread",
-        "transform-decorators-legacy"
-      ]
-    }
-  }
+  "plugins": [
+    ["@babel/plugin-proposal-decorators", {
+      "legacy": true
+    }],
+    ["@babel/plugin-proposal-class-properties", {
+      "loose": true
+    }],
+    "transform-inline-environment-variables",
+    ["@babel/plugin-transform-react-jsx", {
+      "pragma": "___EmotionJSX", // default pragma is React.createElement
+      "pragmaFrag": "React.Fragment" // default is React.Fragment
+    }],
+    "babel-plugin-emotion"
+  ],
+  "presets": ["@emotion/babel-preset-css-prop"]
 }

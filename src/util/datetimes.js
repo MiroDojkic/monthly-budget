@@ -1,9 +1,9 @@
 import fecha from 'fecha';
 
 const formats = {
-  MONTH_LONG: 'MMMM',
   MONTH_SHORT: 'MM',
-  TRUNC_TO_MONTH: 'YYYY-MM'
+  TRUNC_TO_MONTH: 'YYYY-MM',
+  TRUNC_TO_MONTH_PRETTY: 'MMMM YYYY',
 };
 
 export const getPreviousMonth = current => {
