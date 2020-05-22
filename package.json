@@ -44,7 +44,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
-    "fecha": "^2.3.2",
+    "fecha": "^4.2.0",
     "nuka-carousel": "^4.7.0",
     "partial.lenses": "^13.2.1",
     "react": "^16.13.1",
