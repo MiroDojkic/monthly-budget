@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { connect } from 'unistore/react';
-import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 import { format } from 'fecha';
 import Carousel from '../Carousel';
@@ -20,16 +19,6 @@ import {
   getIncomeTotalByDate,
 } from '../../selectors/transactions';
 
-const Grid = styled.div`
-  display: grid;
-  height: 100vh;
-  grid-template: 12.5rem 1fr 3.125rem / 100%;
-  grid-template-areas:
-    'header'
-    'listing'
-    'buttons';
-`;
-
 const Header = styled.header`
   grid-area: header;
   padding: 1.563rem 3.313rem;
@@ -42,12 +31,46 @@ const Header = styled.header`
     '. total .';
 
   background: ${primaryGradient};
+
+  ${Carousel} {
+    grid-area: carousel;
+  }
+
+  ${Total} {
+    grid-area: total;
+  }
 `;
 
-const H5 = styled.h5`
+const Layout = styled.div`
+  display: grid;
+  height: 100vh;
+  grid-template: 12.5rem 1fr 3.125rem / 100%;
+  grid-template-areas:
+    'header'
+    'listing'
+    'buttons';
+
+  ${Header} {
+    grid-area: header;
+  }
+
+  ${Transactions} {
+    grid-area: listing;
+  }
+
+  ${ActionsMenu} {
+    grid-area: buttons;
+  }
+`;
+
+const Month = styled.h5`
   margin: 0;
   text-align: center;
   color: ${white};
+
+  :focus {
+    outline: none;
+  }
 `;
 
 @connect(
@@ -89,7 +112,9 @@ export default class Monthly extends React.Component {
         })),
     );
   };
-  renderMonth = date => <H5>{format(date, formats.TRUNC_TO_MONTH_PRETTY)}</H5>;
+  renderMonth = date => (
+    <Month key={date}>{format(date, formats.TRUNC_TO_MONTH_PRETTY)}</Month>
+  );
   loadDate = index => {
     this.setState({ activeDateIndex: index });
     const date = this.state.dates[index];
@@ -107,7 +132,7 @@ export default class Monthly extends React.Component {
     const incomeTotal = getIncomeTotalByDate(selectedDate);
     const total = getTotalByDate(selectedDate);
     return (
-      <Grid>
+      <Layout>
         <Header>
           <Carousel
             onFirstItemActive={this.onFirstMonthRendered}
@@ -116,31 +141,12 @@ export default class Monthly extends React.Component {
             activeItemIndex={activeDateIndex}
             renderItem={this.renderMonth}
             onActiveItemChange={this.loadDate}
-            css={css`
-              grid-area: carousel;
-            `}
           />
-          <Total
-            total={total}
-            css={css`
-              grid-area: total;
-            `}
-          />
+          <Total total={total} />
         </Header>
-        <Transactions
-          incomeTotal={incomeTotal}
-          expenses={expenses}
-          css={css`
-            grid-area: listing;
-          `}
-        />
-        <ActionsMenu
-          selectedDate={selectedDate}
-          css={css`
-            grid-area: buttons;
-          `}
-        />
-      </Grid>
+        <Transactions incomeTotal={incomeTotal} expenses={expenses} />
+        <ActionsMenu selectedDate={selectedDate} />
+      </Layout>
     );
   }
 }

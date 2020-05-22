@@ -60,6 +60,13 @@ const Value = styled.span`
   font-size: 1.125rem;
 `;
 
+const Income = ({ value }) => (
+  <>
+    <IncomeName>Income</IncomeName>
+    <IncomeValue>${value || 0}</IncomeValue>
+  </>
+);
+
 const Expenses = ({ expenses }) =>
   expenses
     ? expenses.map(({ name, created_at: tz, value }) => (
@@ -77,15 +84,12 @@ const Transactions = connect(state => ({
     <Loader />
   ) : (
     <Listing className={className}>
-      {incomeTotal ? (
-        <ListingItem>
-          <IncomeName>income</IncomeName>
-          <IncomeValue>${incomeTotal}</IncomeValue>
-        </ListingItem>
-      ) : null}
+      <ListingItem>
+        <Income value={incomeTotal} />
+      </ListingItem>
       <Expenses expenses={expenses} />
     </Listing>
   ),
 );
 
-export default Transactions;
+export default styled(Transactions)``;

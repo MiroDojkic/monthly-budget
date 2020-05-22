@@ -1,29 +1,20 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import * as L from 'partial.lenses';
-import Carousel from 'nuka-carousel';
+import NukaCarousel from 'nuka-carousel';
 import ArrowButton from './ArrowButton';
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
 
-const Draggable = styled.div`
-  cursor: move;
-  cursor: grab;
-  cursor: -moz-grab;
-  cursor: -webkit-grab;
-
-  &:active {
-    cursor: grabbing;
-    cursor: -moz-grabbing;
-    cursor: -webkit-grabbing;
+  .slider-slide {
+    outline: none;
   }
 `;
 
-const CarouselComponent = ({
+const Carousel = ({
   activeItemIndex,
   items,
   renderItem,
@@ -49,27 +40,19 @@ const CarouselComponent = ({
   };
   return (
     <Container className={className}>
-      <Carousel
-        renderCenterLeftControls={() => (
-          <ArrowButton onClick={previous} type="left" />
-        )}
-        renderCenterRightControls={() => (
-          <ArrowButton onClick={next} type="right" />
-        )}
+      <NukaCarousel
+        renderCenterLeftControls={() => <ArrowButton onClick={previous} />}
+        renderCenterRightControls={() => <ArrowButton onClick={next} right />}
         renderBottomCenterControls={() => null}
         slideIndex={activeItemIndex}
         afterSlide={onChange}
         disableAnimation
         dragging={false}
       >
-        {items.map(item => (
-          <Draggable key={`carousel-item-${item}`}>
-            {renderItem(item)}
-          </Draggable>
-        ))}
-      </Carousel>
+        {items.map(item => renderItem(item))}
+      </NukaCarousel>
     </Container>
   );
 };
 
-export default CarouselComponent;
+export default styled(Carousel)``;

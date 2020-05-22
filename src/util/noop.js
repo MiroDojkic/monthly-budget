@@ -1,1 +1,1 @@
-export default Function.prototype;
+export default () => {};

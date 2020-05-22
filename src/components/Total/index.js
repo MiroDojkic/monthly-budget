@@ -5,7 +5,7 @@ import Loader from './Loader';
 import { getLoading } from '../../selectors/transactions';
 import { accent, white } from '../../constants/colors';
 
-const Wrapper = styled.div`
+const Container = styled.div`
   display: flex;
   flex-flow: column nowrap;
 
@@ -40,7 +40,7 @@ const Name = styled.div`
 const Total = connect(state => ({
   loading: getLoading(state),
 }))(({ total, loading, className }) => (
-  <Wrapper className={className}>
+  <Container className={className}>
     {loading ? (
       <Loader />
     ) : (
@@ -49,7 +49,7 @@ const Total = connect(state => ({
         <Name>leftover</Name>
       </CenteredColumn>
     )}
-  </Wrapper>
+  </Container>
 ));
 
-export default Total;
+export default styled(Total)``;

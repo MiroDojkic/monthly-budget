@@ -8,6 +8,7 @@ module.exports = {
   plugins: ['prettier'],
   rules: {
     'no-debugger': 'warn',
+    'import/prefer-default-export': 'off',
     'prettier/prettier': 'error',
     'react/prop-types': 'off',
     'react/jsx-filename-extension': 'off',

@@ -13,14 +13,14 @@ const arrowCls = css`
 
 export default class ArrowButton extends React.Component {
   render() {
-    const { onClick, disabled, type = 'left' } = this.props;
+    const { onClick, disabled, right } = this.props;
 
     return (
       <Button onClick={onClick} disabled={disabled}>
-        {type === 'left' ? (
-          <ArrowLeftIcon aria-label="Previous" css={arrowCls} />
-        ) : (
+        {right ? (
           <ArrowRightIcon aria-label="Next" css={arrowCls} />
+        ) : (
+          <ArrowLeftIcon aria-label="Previous" css={arrowCls} />
         )}
       </Button>
     );
