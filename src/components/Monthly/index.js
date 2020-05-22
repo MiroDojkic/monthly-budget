@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'unistore/react';
 import { css } from '@emotion/core';
 import styled from '@emotion/styled';
-import fecha from 'fecha';
+import { format } from 'fecha';
 import Carousel from '../Carousel';
 import Total from '../Total';
 import Transactions from '../Transactions';
@@ -89,9 +89,7 @@ export default class Monthly extends React.Component {
         })),
     );
   };
-  renderMonth = date => (
-    <H5>{fecha.format(date, formats.TRUNC_TO_MONTH_PRETTY)}</H5>
-  );
+  renderMonth = date => <H5>{format(date, formats.TRUNC_TO_MONTH_PRETTY)}</H5>;
   loadDate = index => {
     this.setState({ activeDateIndex: index });
     const date = this.state.dates[index];
