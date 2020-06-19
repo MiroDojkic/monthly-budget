@@ -55,6 +55,6 @@
     "react-router": "^4.2.0",
     "thwack": "^0.5.0",
     "unissist": "^1.4.0",
-    "unistore": "^3.5.1"
+    "unistore": "^3.5.2"
   }
 }
