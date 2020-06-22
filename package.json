@@ -20,7 +20,7 @@
   "devDependencies": {
     "@babel/core": "^7.10.2",
     "@babel/plugin-proposal-class-properties": "^7.10.1",
-    "@babel/plugin-proposal-decorators": "^7.10.1",
+    "@babel/plugin-proposal-decorators": "^7.10.3",
     "@babel/plugin-transform-react-jsx": "^7.10.1",
     "@emotion/babel-preset-css-prop": "^10.0.27",
     "babel-core": "^6.26.3",
