@@ -45,7 +45,7 @@
     "@emotion/core": "^10.0.35",
     "@emotion/styled": "^10.0.27",
     "fecha": "^4.2.0",
-    "nuka-carousel": "^4.7.1",
+    "nuka-carousel": "^4.7.2",
     "partial.lenses": "^13.2.1",
     "react": "^16.14.0",
     "react-content-loader": "^2.0.2",
