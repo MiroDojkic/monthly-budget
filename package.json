@@ -52,7 +52,7 @@
     "react-dom": "^16.14.0",
     "react-hot-loader": "^3.1.3",
     "react-loadable": "^5.5.0",
-    "react-router": "^4.2.0",
+    "react-router": "^5.2.0",
     "thwack": "^0.6.1",
     "unissist": "^1.4.0",
     "unistore": "^3.5.2"
