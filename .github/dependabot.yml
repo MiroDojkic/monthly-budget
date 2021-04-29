@@ -1,0 +1,36 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: y18n
+    versions:
+    - 4.0.1
+    - 4.0.2
+  - dependency-name: workbox-cli
+    versions:
+    - 6.0.2
+    - 6.1.0
+    - 6.1.1
+    - 6.1.2
+  - dependency-name: react-content-loader
+    versions:
+    - 6.0.1
+    - 6.0.2
+  - dependency-name: "@babel/plugin-transform-react-jsx"
+    versions:
+    - 7.12.12
+    - 7.12.13
+    - 7.12.16
+    - 7.12.17
+  - dependency-name: "@babel/plugin-proposal-class-properties"
+    versions:
+    - 7.12.1
+    - 7.12.13
+  - dependency-name: "@emotion/babel-preset-css-prop"
+    versions:
+    - 11.0.0
